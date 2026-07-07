@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>何处 Whereabouts · 一句话记下东西放哪了</title>
+<meta name="description" content="何处 Whereabouts —— 极简物品位置记事本,自然语言一句话录入,AI 智能理解。macOS 与 iOS。">
+<link rel="canonical" href="https://whereabouts.top/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+<style>
+  :root {
+    --paper: #FBFBFE; --card: #FFFFFF; --ink: #20223A; --muted: #5C5F7A;
+    --faint: #9092AC; --line: #E4E5F1; --accent: #4B4FE0; --accent-2: #1493EE;
+    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+            "Microsoft YaHei", "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #131420; --card: #1B1D2E; --ink: #E9EAF4; --muted: #A2A5C0;
+      --faint: #767993; --line: #2C2E44; --accent: #7B7EF2; --accent-2: #3FAAF5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); line-height: 1.75; font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100svh; display: grid; place-items: center;
+  }
+  .wrap { max-width: 560px; padding: 48px 22px; text-align: center; }
+  .appicon {
+    width: 88px; height: 88px; border-radius: 22px; margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; display: grid; place-items: center;
+    font-size: 44px; font-weight: 800;
+    box-shadow: 0 12px 32px rgba(75, 79, 224, 0.25);
+  }
+  h1 { font-size: clamp(26px, 7vw, 34px); margin: 0 0 8px; font-weight: 800; letter-spacing: -0.015em; }
+  .lede { color: var(--muted); font-size: 17px; margin: 0 0 8px; }
+  .sub { color: var(--faint); font-size: 14px; margin: 0 0 32px; }
+  .links { display: grid; gap: 12px; }
+  .links a {
+    display: flex; align-items: center; gap: 12px; text-align: left;
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 15px 18px; text-decoration: none; color: var(--ink);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .links a:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .links .emoji { font-size: 24px; flex: none; }
+  .links b { display: block; font-size: 15.5px; }
+  .links span.d { display: block; font-size: 13px; color: var(--muted); }
+  footer { margin-top: 36px; color: var(--faint); font-size: 13px; }
+  footer a { color: var(--faint); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="appicon">处</div>
+    <h1>何处 Whereabouts</h1>
+    <p class="lede">「充电宝在卧室抽屉第二格」—— 打完这句话,就记完了。</p>
+    <p class="sub">极简物品位置记事本 · 自然语言录入 · 可选 AI 智能理解 · macOS &amp; iOS · 数据全在本地</p>
+    <div class="links">
+      <a href="/guide.html">
+        <span class="emoji">📖</span>
+        <span><b>AI 配置图文指南</b><span class="d">火山引擎 / Claude 两条路线,10 分钟保姆级教程</span></span>
+      </a>
+      <a href="/privacy.html">
+        <span class="emoji">🔒</span>
+        <span><b>隐私政策 Privacy Policy</b><span class="d">零收集、零上传 —— 一页说清</span></span>
+      </a>
+    </div>
+    <footer>
+      © 2026 Bam Cope · <a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a>
+    </footer>
+  </div>
+</body>
+</html>

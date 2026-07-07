@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>何处 · AI 配置指南 / Whereabouts AI Setup Guide</title>
+<link rel="canonical" href="https://whereabouts.top/guide.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+</head>
+<body>
+
+<style>
+  :root {
+    --paper: #FBFBFE;
+    --card: #FFFFFF;
+    --ink: #20223A;
+    --muted: #5C5F7A;
+    --faint: #9092AC;
+    --line: #E4E5F1;
+    --accent: #4B4FE0;
+    --accent-2: #1493EE;
+    --accent-soft: #EEEFFC;
+    --ok: #1F8A54;
+    --ok-soft: #E7F5EC;
+    --warn: #A66A10;
+    --warn-soft: #FBF3E2;
+    --bad: #C24040;
+    --bad-soft: #FBECEC;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+            "Microsoft YaHei", "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #131420; --card: #1B1D2E; --ink: #E9EAF4; --muted: #A2A5C0;
+      --faint: #767993; --line: #2C2E44; --accent: #7B7EF2; --accent-2: #3FAAF5;
+      --accent-soft: #23254324; --accent-soft: #262852;
+      --ok: #4CC688; --ok-soft: #17321F; --warn: #E0A34E; --warn-soft: #33270E;
+      --bad: #E27070; --bad-soft: #391A1A;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #FBFBFE; --card: #FFFFFF; --ink: #20223A; --muted: #5C5F7A;
+    --faint: #9092AC; --line: #E4E5F1; --accent: #4B4FE0; --accent-2: #1493EE;
+    --accent-soft: #EEEFFC; --ok: #1F8A54; --ok-soft: #E7F5EC;
+    --warn: #A66A10; --warn-soft: #FBF3E2; --bad: #C24040; --bad-soft: #FBECEC;
+  }
+  :root[data-theme="dark"] {
+    --paper: #131420; --card: #1B1D2E; --ink: #E9EAF4; --muted: #A2A5C0;
+    --faint: #767993; --line: #2C2E44; --accent: #7B7EF2; --accent-2: #3FAAF5;
+    --accent-soft: #262852; --ok: #4CC688; --ok-soft: #17321F;
+    --warn: #E0A34E; --warn-soft: #33270E; --bad: #E27070; --bad-soft: #391A1A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); line-height: 1.75; font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 80px; }
+
+  /* ---------- 语言切换 ---------- */
+  [data-lang="zh"] .en { display: none; }
+  [data-lang="en"] .zh { display: none; }
+  .langbar {
+    display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 6px;
+  }
+  .langbar button {
+    font: inherit; font-size: 13px; padding: 4px 14px; border-radius: 99px;
+    border: 1px solid var(--line); background: var(--card); color: var(--muted);
+    cursor: pointer;
+  }
+  .langbar button.on {
+    background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600;
+  }
+  .langbar button:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+
+  /* ---------- 头部 ---------- */
+  header .brand {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+  }
+  .appicon {
+    width: 46px; height: 46px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; display: grid; place-items: center;
+    font-size: 22px; font-weight: 800;
+  }
+  .brand .name { font-weight: 700; font-size: 17px; letter-spacing: .01em; }
+  .brand .sub { font-size: 13px; color: var(--faint); }
+  h1 {
+    font-size: clamp(26px, 6vw, 34px); line-height: 1.25; margin: 0 0 10px;
+    font-weight: 800; letter-spacing: -0.015em; text-wrap: balance;
+  }
+  .lede { color: var(--muted); font-size: 16.5px; margin: 0 0 22px; max-width: 60ch; }
+
+  /* ---------- 准备清单 ---------- */
+  .need {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px; margin: 0 0 30px;
+  }
+  .need div {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 12px 14px; font-size: 14px; color: var(--muted);
+  }
+  .need b { display: block; color: var(--ink); font-size: 15px; margin-bottom: 2px; }
+
+  /* ---------- 路线选择卡 ---------- */
+  .routes { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 14px 0 8px; }
+  @media (min-width: 620px) { .routes { grid-template-columns: 1fr 1fr; } }
+  .route {
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 18px;
+    padding: 18px 18px 14px; position: relative;
+  }
+  .route.reco { border-color: var(--accent); }
+  .route .flag {
+    position: absolute; top: -11px; left: 16px; font-size: 12px; font-weight: 700;
+    background: var(--accent); color: #fff; border-radius: 99px; padding: 2px 10px;
+  }
+  .route h3 { margin: 2px 0 8px; font-size: 17px; }
+  .route ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--muted); }
+  .route li { margin: 3px 0; }
+  .route .go {
+    display: inline-block; margin-top: 12px; font-size: 14px; font-weight: 600;
+    color: var(--accent); text-decoration: none;
+  }
+  .route .go:hover { text-decoration: underline; }
+
+  /* ---------- 章节 ---------- */
+  section { margin-top: 44px; }
+  h2 {
+    font-size: 21px; font-weight: 800; letter-spacing: -0.01em;
+    margin: 0 0 4px; scroll-margin-top: 20px; text-wrap: balance;
+  }
+  h2 .tag {
+    font-size: 12px; font-weight: 700; vertical-align: 3px; margin-left: 8px;
+    color: var(--accent); background: var(--accent-soft);
+    padding: 2px 9px; border-radius: 99px; letter-spacing: .04em;
+  }
+  .sectionsub { color: var(--faint); font-size: 14px; margin: 0 0 16px; }
+
+  /* ---------- 步骤 ---------- */
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  ol.steps > li {
+    counter-increment: step; position: relative; padding: 0 0 22px 46px;
+  }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 1px; width: 28px; height: 28px;
+    border-radius: 9px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  ol.steps > li:not(:last-child)::after {
+    content: ""; position: absolute; left: 13.5px; top: 34px; bottom: 4px;
+    width: 1.5px; background: var(--line);
+  }
+  ol.steps b.t { display: block; font-size: 16px; margin-bottom: 2px; }
+  ol.steps p { margin: 4px 0; color: var(--muted); font-size: 14.5px; }
+  code {
+    font-family: var(--mono); font-size: 0.88em; background: var(--accent-soft);
+    color: var(--accent); border-radius: 6px; padding: 1px 6px;
+    word-break: break-all;
+  }
+  .copyable { user-select: all; }
+  a { color: var(--accent); }
+
+  .note {
+    border-radius: 12px; padding: 10px 14px; font-size: 13.5px; margin: 8px 0;
+    border: 1px solid transparent;
+  }
+  .note.ok   { background: var(--ok-soft);   color: var(--ok); }
+  .note.warn { background: var(--warn-soft); color: var(--warn); }
+  .note.bad  { background: var(--bad-soft);  color: var(--bad); }
+
+  /* ---------- app 界面示意 ---------- */
+  .mock {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 16px; margin: 14px 0; font-size: 14px;
+  }
+  .mock .bar {
+    font-size: 12px; letter-spacing: .08em; color: var(--faint);
+    text-transform: uppercase; margin-bottom: 10px; font-weight: 700;
+  }
+  .mock .row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 9px 0; border-bottom: 1px dashed var(--line);
+  }
+  .mock .row:last-child { border-bottom: none; }
+  .mock .k { color: var(--muted); flex: none; }
+  .mock .v {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line); border-radius: 8px;
+    padding: 4px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    max-width: 60%;
+  }
+  .mock .seg {
+    display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden;
+  }
+  .mock .seg span { padding: 4px 12px; font-size: 13px; color: var(--muted); }
+  .mock .seg .sel { background: var(--accent); color: #fff; font-weight: 600; }
+
+  /* ---------- 表格 ---------- */
+  .tablewrap { overflow-x: auto; margin: 12px 0; border: 1px solid var(--line); border-radius: 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 520px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th {
+    font-size: 12px; letter-spacing: .05em; color: var(--faint); font-weight: 700;
+    background: color-mix(in srgb, var(--accent-soft) 45%, var(--card));
+  }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td code { background: transparent; padding: 0; color: var(--accent); }
+
+  /* ---------- FAQ ---------- */
+  details {
+    border: 1px solid var(--line); border-radius: 14px; background: var(--card);
+    padding: 12px 16px; margin: 8px 0;
+  }
+  summary { cursor: pointer; font-weight: 600; font-size: 15px; }
+  summary:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 6px; }
+  details p { color: var(--muted); font-size: 14px; margin: 8px 0 2px; }
+
+  footer {
+    margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
+    color: var(--faint); font-size: 13px;
+  }
+  footer a { color: var(--faint); }
+
+  /* 顶部小导航 */
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 6px; }
+  nav.toc a {
+    font-size: 13px; text-decoration: none; color: var(--muted);
+    border: 1px solid var(--line); background: var(--card);
+    padding: 5px 12px; border-radius: 99px;
+  }
+  nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+
+<div class="wrap">
+  <div class="langbar" role="group" aria-label="Language">
+    <button id="btn-zh" class="on" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <header>
+    <div class="brand">
+      <div class="appicon">处</div>
+      <div>
+        <div class="name">何处 Whereabouts</div>
+        <div class="sub zh">物品去哪了,一句话记下</div>
+        <div class="sub en">Remember where your things are — in one sentence</div>
+      </div>
+    </div>
+    <h1 class="zh">AI 智能理解 · 保姆级配置指南</h1>
+    <h1 class="en">AI Setup — the Hand-holding Guide</h1>
+    <p class="lede zh">「何处」不配 AI 也完全能用。但配上一把 AI 钥匙后,随手写的一句「充电宝在卧室抽屉第二格」会被拆得更聪明:型号、颜色、位置层级、分类标签全都自动就位。这页教你从零开始拿到这把钥匙 —— 全程大约 10 分钟,跟着点就行。</p>
+    <p class="lede en">Whereabouts works fine without AI. With an AI key, though, a quick note like "power bank in the 2nd bedroom drawer" gets parsed much more intelligently — model, color, nested location, and category tag all filled in automatically. This page walks you from zero to a working key in about 10 minutes.</p>
+
+    <div class="need">
+      <div><b class="zh">⏱ 10 分钟</b><b class="en">⏱ 10 minutes</b><span class="zh">一次配置,长期使用</span><span class="en">One-time setup</span></div>
+      <div><b class="zh">📮 一个邮箱或手机号</b><b class="en">📮 An email / phone number</b><span class="zh">用来注册账号</span><span class="en">To create the account</span></div>
+      <div><b class="zh">💳 支付方式</b><b class="en">💳 A payment method</b><span class="zh">火山引擎支持支付宝/微信;Claude 需国际信用卡</span><span class="en">Volcengine: Alipay/WeChat · Claude: intl. credit card</span></div>
+    </div>
+
+    <nav class="toc">
+      <a href="#route-a" class="zh">路线 A · 火山引擎</a>
+      <a href="#route-a" class="en">Route A · Volcengine</a>
+      <a href="#route-b" class="zh">路线 B · Claude 官方</a>
+      <a href="#route-b" class="en">Route B · Claude</a>
+      <a href="#fill" class="zh">填进 app</a>
+      <a href="#fill" class="en">Enter into the app</a>
+      <a href="#cost" class="zh">花多少钱</a>
+      <a href="#cost" class="en">Cost</a>
+      <a href="#errors" class="zh">报错排查</a>
+      <a href="#errors" class="en">Troubleshooting</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <!-- ================= 选路线 ================= -->
+  <section id="choose">
+    <h2 class="zh">先选一条路线</h2>
+    <h2 class="en">Pick your route first</h2>
+    <p class="sectionsub zh">两家服务商任选其一即可;app 里也可以两家都填好、随时切换。</p>
+    <p class="sectionsub en">Either provider works. You can even configure both in the app and switch anytime.</p>
+
+    <div class="routes">
+      <div class="route reco">
+        <span class="flag zh">国内用户推荐</span><span class="flag en">Recommended in China</span>
+        <h3>🌋 <span class="zh">路线 A · 火山引擎(豆包大模型)</span><span class="en">Route A · Volcengine (Doubao)</span></h3>
+        <ul class="zh">
+          <li>手机号注册,支付宝 / 微信付款</li>
+          <li>国内直连,不需要任何代理</li>
+          <li>新用户每个模型送 50 万 tokens 免费额度</li>
+          <li>需要实名认证(支付宝刷脸,几分钟)</li>
+        </ul>
+        <ul class="en">
+          <li>Register with a phone number; pay via Alipay / WeChat</li>
+          <li>Directly reachable from mainland China</li>
+          <li>New users get 500K free tokens per model</li>
+          <li>Real-name verification required (a few minutes)</li>
+        </ul>
+        <a class="go" href="#route-a"><span class="zh">跟我走 ↓</span><span class="en">Follow me ↓</span></a>
+      </div>
+      <div class="route">
+        <h3>🤖 <span class="zh">路线 B · Claude 官方 API</span><span class="en">Route B · Claude API</span></h3>
+        <ul class="zh">
+          <li>Anthropic 官方,解析质量口碑最好</li>
+          <li>需要国际信用卡(Visa / MasterCard),最低充 $5</li>
+          <li>官方支持地区不含中国大陆,需要相应网络环境</li>
+          <li>适合本来就有 Claude 账号 / 海外卡的用户</li>
+        </ul>
+        <ul class="en">
+          <li>Anthropic's official API — top-tier parsing quality</li>
+          <li>International credit card required, $5 minimum credit</li>
+          <li>Mainland China is not in the supported-regions list</li>
+          <li>Great if you already have a Claude account</li>
+        </ul>
+        <a class="go" href="#route-b"><span class="zh">跟我走 ↓</span><span class="en">Follow me ↓</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 路线 A ================= -->
+  <section id="route-a">
+    <h2><span class="zh">路线 A · 火山引擎,五步拿到钥匙</span><span class="en">Route A · Volcengine in five steps</span><span class="tag zh">推荐</span></h2>
+    <ol class="steps">
+      <li>
+        <b class="t zh">注册火山引擎账号</b><b class="t en">Create a Volcengine account</b>
+        <p class="zh">打开 <a href="https://www.volcengine.com" target="_blank" rel="noopener">volcengine.com</a>,右上角「注册」,用手机号收验证码即可。它是字节跳动(抖音母公司)的云服务,豆包大模型就在这里。</p>
+        <p class="en">Open <a href="https://www.volcengine.com" target="_blank" rel="noopener">volcengine.com</a> and sign up with a phone number. It's ByteDance's cloud platform, home of the Doubao models.</p>
+      </li>
+      <li>
+        <b class="t zh">完成实名认证</b><b class="t en">Complete real-name verification</b>
+        <p class="zh">调用大模型 API 之前必须实名。控制台会引导你走「个人实名认证」:填身份证号 + 支付宝或微信扫码刷脸,一般几分钟内通过。</p>
+        <p class="en">Real-name verification is mandatory before calling the API. The console guides you through it — ID number plus an Alipay/WeChat face scan; usually approved within minutes.</p>
+      </li>
+      <li>
+        <b class="t zh">打开「火山方舟」控制台,创建 API Key</b><b class="t en">Open the Ark console and create an API Key</b>
+        <p class="zh">直达链接:<a href="https://console.volcengine.com/ark" target="_blank" rel="noopener">console.volcengine.com/ark</a>。在左侧菜单找到「<b>API Key 管理</b>」→ 点「<b>创建 API Key</b>」。</p>
+        <p class="en">Go to <a href="https://console.volcengine.com/ark" target="_blank" rel="noopener">console.volcengine.com/ark</a> → left sidebar → <b>API Key management</b> → <b>Create API Key</b>.</p>
+        <div class="note warn zh">⚠️ 完整密钥只在创建时显示一次 —— 立刻复制,粘到备忘录暂存。丢了也不要慌,删掉重建一把即可。</div>
+        <div class="note warn en">⚠️ The full key is shown only once at creation — copy it immediately. If you lose it, just delete and create a new one.</div>
+      </li>
+      <li>
+        <b class="t zh">确认模型可用(新用户有免费额度)</b><b class="t en">Make sure the model is enabled (free quota for new users)</b>
+        <p class="zh">新用户每个模型送 <b>50 万 tokens</b> 免费推理额度,足够「何处」用几百次。免费额度用完后,去「<b>开通管理</b>」页把要用的模型点开通,再到费用中心用支付宝/微信充值(几块钱就够用很久,见下方费用表)。</p>
+        <p class="en">New users get <b>500K free tokens per model</b> — good for hundreds of Whereabouts calls. When it runs out, enable the model on the <b>开通管理 (Model activation)</b> page and top up via Alipay/WeChat.</p>
+      </li>
+      <li>
+        <b class="t zh">把三样东西填进「何处」</b><b class="t en">Enter three things into Whereabouts</b>
+        <p class="zh">看下面「<a href="#fill">填进 app</a>」小节 —— 服务商选「火山引擎」,Model 填 <code class="copyable">doubao-seed-1-6-250615</code>(或控制台里你看到的其它在售模型 ID / <code>ep-</code> 开头的接入点 ID),API Key 粘贴刚才复制的,Endpoint 保持默认不动。</p>
+        <p class="en">See "<a href="#fill">Enter into the app</a>" below — pick Volcengine as provider, set Model to <code class="copyable">doubao-seed-1-6-250615</code> (or any live model ID / an <code>ep-</code> endpoint ID from your console), paste the API Key, leave Endpoint at its default.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ================= 路线 B ================= -->
+  <section id="route-b">
+    <h2><span class="zh">路线 B · Claude 官方,四步拿到钥匙</span><span class="en">Route B · Claude API in four steps</span></h2>
+    <ol class="steps">
+      <li>
+        <b class="t zh">注册 Claude 开发者控制台</b><b class="t en">Sign up for the Claude Console</b>
+        <p class="zh">打开 <a href="https://platform.claude.com" target="_blank" rel="noopener">platform.claude.com</a>(旧地址 console.anthropic.com 会自动跳转过来),用邮箱或 Google 账号注册并验证邮箱。注意:这个「开发者控制台」和 Claude 聊天网页是两套账户体系,Claude Pro 会员≠API 额度。</p>
+        <p class="en">Open <a href="https://platform.claude.com" target="_blank" rel="noopener">platform.claude.com</a> (the old console.anthropic.com redirects here). Sign up with email or Google. Note: the developer console is separate from the Claude chat subscription — Claude Pro does not include API credits.</p>
+        <div class="note warn zh">⚠️ Anthropic 官方支持地区不含中国大陆和香港。你需要处于支持地区的网络环境,并用对应地区的支付卡。</div>
+        <div class="note warn en">⚠️ Anthropic's supported-regions list does not include mainland China or Hong Kong. You'll need to be in a supported region (network and payment card).</div>
+      </li>
+      <li>
+        <b class="t zh">充值 Credits(最低 $5)</b><b class="t en">Buy credits ($5 minimum)</b>
+        <p class="zh">控制台里进 Billing / Plans &amp; billing,绑定 Visa / MasterCard 等国际信用卡,买预付 credits,最低 $5。Credits 一年内有效、不退款 —— 对「何处」来说 $5 够用非常久(见费用表)。没充值前无法创建 API Key。</p>
+        <p class="en">In Billing, add a major credit card and buy prepaid credits ($5 minimum; valid for one year, non-refundable). You can't create an API key before purchasing credits. For Whereabouts, $5 lasts a very long time.</p>
+      </li>
+      <li>
+        <b class="t zh">创建 API Key</b><b class="t en">Create an API Key</b>
+        <p class="zh">控制台 → <b>Settings → API keys → Create Key</b>,起个名字(比如 whereabouts),生成一串 <code>sk-ant-</code> 开头的密钥。</p>
+        <p class="en">Console → <b>Settings → API keys → Create Key</b>. Name it (e.g. "whereabouts") and you'll get a key starting with <code>sk-ant-</code>.</p>
+        <div class="note warn zh">⚠️ 同样只显示一次,立刻复制保存。</div>
+        <div class="note warn en">⚠️ Also shown only once — copy it right away.</div>
+      </li>
+      <li>
+        <b class="t zh">填进「何处」,模型选 Haiku 4.5</b><b class="t en">Enter into Whereabouts; pick Haiku 4.5</b>
+        <p class="zh">服务商选「Claude」,模型用默认的 <b>Haiku 4.5</b>(最快最便宜,这个场景完全够用),API Key 粘贴,Endpoint 保持默认。</p>
+        <p class="en">Pick Claude as provider, keep the default <b>Haiku 4.5</b> model (fast, cheap, plenty for this job), paste the key, leave Endpoint at its default.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ================= 填进 app ================= -->
+  <section id="fill">
+    <h2><span class="zh">填进 app:就这四格</span><span class="en">Enter into the app: just four fields</span></h2>
+    <p class="sectionsub zh">Mac 上:菜单栏「何处 → 设置…(⌘,)」→「AI」标签页。iPhone 上:「设置」tab → AI。</p>
+    <p class="sectionsub en">On Mac: menu bar → Whereabouts → Settings… (⌘,) → AI tab. On iPhone: Settings tab → AI.</p>
+
+    <div class="mock" role="img" aria-label="AI settings mock">
+      <div class="bar zh">何处 · 设置 → AI</div>
+      <div class="bar en">Whereabouts · Settings → AI</div>
+      <div class="row">
+        <span class="k zh">当前服务商</span><span class="k en">Active provider</span>
+        <span class="seg"><span class="sel">Claude</span><span class="zh">火山引擎</span><span class="en">Volcengine</span></span>
+      </div>
+      <div class="row">
+        <span class="k zh">模型</span><span class="k en">Model</span>
+        <span class="v">Haiku 4.5 ▾</span>
+      </div>
+      <div class="row">
+        <span class="k">API Key</span>
+        <span class="v">sk-ant-api03-••••••••••••</span>
+      </div>
+      <div class="row">
+        <span class="k">Endpoint</span>
+        <span class="v zh">(默认,别动)</span><span class="v en">(leave default)</span>
+      </div>
+      <div class="row">
+        <span class="k zh">测试连接</span><span class="k en">Test connection</span>
+        <span style="color: var(--ok); font-weight: 600;">✓ <span class="zh">连接成功</span><span class="en">Connected</span></span>
+      </div>
+    </div>
+
+    <p class="zh">填完点「<b>测试连接</b>」。看到绿色 ✓ 就大功告成 —— 回到主界面,录入框下勾上「用 AI 自动理解」,或对任意物品右键(iPhone 上长按)选「用 AI 理解」试一发。</p>
+    <p class="en">Tap <b>Test connection</b>. Green ✓ means you're done — go back, tick "Understand with AI on input", or long-press / right-click any item and choose "Understand with AI" to try it.</p>
+    <div class="note ok zh">🔒 你的 API Key 只保存在这台设备的本机偏好设置里,不会上传到任何服务器;开发者也看不到。</div>
+    <div class="note ok en">🔒 Your API key is stored only in this device's local preferences. It is never uploaded anywhere; the developer cannot see it.</div>
+  </section>
+
+  <!-- ================= 花多少钱 ================= -->
+  <section id="cost">
+    <h2><span class="zh">这要花多少钱?</span><span class="en">How much does it cost?</span></h2>
+    <p class="sectionsub zh">「何处」每次 AI 理解大约消耗 2,000 输入 + 200 输出 tokens。下表按官方 2026 年 7 月牌价粗算,以实际账单为准。</p>
+    <p class="sectionsub en">One AI call in Whereabouts uses roughly 2,000 input + 200 output tokens. Estimates below use official prices as of July 2026 — your bill is the source of truth.</p>
+    <div class="tablewrap"><table>
+      <thead><tr>
+        <th class="zh">模型</th><th class="en">Model</th>
+        <th class="zh">输入 / 百万</th><th class="en">Input / M</th>
+        <th class="zh">输出 / 百万</th><th class="en">Output / M</th>
+        <th class="zh">≈ 每次理解</th><th class="en">≈ per call</th>
+        <th class="zh">≈ 理解 1000 件</th><th class="en">≈ 1000 calls</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td>Doubao Seed 1.6<span class="zh">(火山)</span><span class="en"> (Volc)</span></td>
+          <td class="num">¥0.8</td><td class="num">¥8</td>
+          <td class="num">≈ ¥0.003</td><td class="num">≈ ¥3.2</td>
+        </tr>
+        <tr>
+          <td>Claude Haiku 4.5 <span class="zh">(推荐)</span><span class="en">(reco.)</span></td>
+          <td class="num">$1</td><td class="num">$5</td>
+          <td class="num">≈ $0.003</td><td class="num">≈ $3</td>
+        </tr>
+        <tr>
+          <td>Claude Sonnet 5</td>
+          <td class="num">$2*</td><td class="num">$10*</td>
+          <td class="num">≈ $0.006</td><td class="num">≈ $6</td>
+        </tr>
+        <tr>
+          <td>Claude Opus 4.8</td>
+          <td class="num">$5</td><td class="num">$25</td>
+          <td class="num">≈ $0.015</td><td class="num">≈ $15</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="sectionsub zh">* Sonnet 5 为 2026-08-31 前的促销价,之后 $3 / $15。结论:普通人整理完一屋子东西,花费大概是一杯奶茶零头。app 的「设置 → AI → 用量统计」里能看到今天 / 本周 / 本月的调用数和估算花费。</p>
+    <p class="sectionsub en">* Sonnet 5 promo pricing until Aug 31, 2026; $3/$15 afterwards. Bottom line: cataloguing your whole home costs pocket change. Check Settings → AI → Usage for daily/weekly/monthly calls and cost estimates.</p>
+  </section>
+
+  <!-- ================= 报错排查 ================= -->
+  <section id="errors">
+    <h2><span class="zh">报错了?对着这张表查</span><span class="en">Got an error? Look it up here</span></h2>
+    <div class="tablewrap"><table>
+      <thead><tr>
+        <th class="zh">你看到的</th><th class="en">What you see</th>
+        <th class="zh">多半是因为</th><th class="en">Likely cause</th>
+        <th class="zh">怎么办</th><th class="en">Fix</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><code>401</code> · invalid x-api-key / authentication</td>
+          <td class="zh">Key 复制少了字符,或已被删除</td><td class="en">Key mistyped / deleted</td>
+          <td class="zh">回控制台重新创建一把,整串重新粘贴(注意别带空格)</td><td class="en">Create a new key and re-paste the whole string (no spaces)</td>
+        </tr>
+        <tr>
+          <td><code>403</code> · request not allowed / region</td>
+          <td class="zh">Claude:所在网络地区不受支持</td><td class="en">Claude: unsupported region</td>
+          <td class="zh">切换到支持地区的网络环境后重测</td><td class="en">Switch to a supported-region network and retest</td>
+        </tr>
+        <tr>
+          <td><code>404</code> · model not found</td>
+          <td class="zh">火山:模型 ID 拼错,或该模型没开通</td><td class="en">Volc: model ID typo, or model not enabled</td>
+          <td class="zh">对照方舟控制台复制准确的模型 ID;去「开通管理」把模型开通</td><td class="en">Copy the exact model ID from the Ark console; enable it under Model activation</td>
+        </tr>
+        <tr>
+          <td><code>429</code> · rate limit / quota exceeded</td>
+          <td class="zh">免费额度用完,或请求太频繁</td><td class="en">Free quota exhausted, or too many requests</td>
+          <td class="zh">充值 / 开通付费;批量理解时等一会儿再试</td><td class="en">Top up / enable billing; wait a bit between large batches</td>
+        </tr>
+        <tr>
+          <td class="zh"><code>credit balance is too low</code> 之类</td><td class="en"><code>credit balance is too low</code></td>
+          <td class="zh">Claude:预付 credits 用完了</td><td class="en">Claude: prepaid credits exhausted</td>
+          <td class="zh">到 platform.claude.com → Billing 再充一点</td><td class="en">Top up at platform.claude.com → Billing</td>
+        </tr>
+        <tr>
+          <td class="zh">一直转圈 / 超时 / 无法连接</td><td class="en">Spinner forever / timeout</td>
+          <td class="zh">网络不通(Claude 域名在大陆直连不通属正常)</td><td class="en">Network unreachable</td>
+          <td class="zh">检查网络环境;火山引擎用户检查是否改动过 Endpoint —— 点「恢复默认」再试</td><td class="en">Check your network; if you edited the Endpoint, restore the default and retry</td>
+        </tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="faq">
+    <h2>FAQ</h2>
+    <details>
+      <summary class="zh">我用第三方中转站 / 代理服务,能接吗?</summary>
+      <summary class="en">Can I use a third-party relay / proxy endpoint?</summary>
+      <p class="zh">可以。把设置里的 Endpoint 换成中转站给你的完整 URL 即可(Claude 填 Messages 兼容地址,火山那格填 OpenAI 兼容的 chat/completions 地址)。中转站的质量和隐私请自行甄别 —— 你的物品描述会经过它。</p>
+      <p class="en">Yes — replace the Endpoint field with your relay's full URL (Anthropic Messages-compatible for Claude; OpenAI chat/completions-compatible for the Volcengine slot). Vet the relay yourself: your item text passes through it.</p>
+    </details>
+    <details>
+      <summary class="zh">模型该选哪个?</summary>
+      <summary class="en">Which model should I pick?</summary>
+      <p class="zh">这个任务(拆字段 + 挑标签)不难,便宜的就够:Claude 选 Haiku 4.5;火山选 doubao-seed 系列即可。想要极致准确再上 Sonnet / Opus。</p>
+      <p class="en">This task (field splitting + tag picking) is easy. Cheap models are plenty: Haiku 4.5 on Claude, or a doubao-seed model on Volcengine. Go Sonnet/Opus only if you want maximum accuracy.</p>
+    </details>
+    <details>
+      <summary class="zh">Mac 和 iPhone 要各填一次吗?</summary>
+      <summary class="en">Do I need to enter the key on both Mac and iPhone?</summary>
+      <p class="zh">要。目前设置只存在各自设备本机(没有云同步),所以两台设备各粘贴一次同一把 Key 就好。</p>
+      <p class="en">Yes. Settings live on each device locally (no cloud sync yet), so paste the same key once per device.</p>
+    </details>
+    <details>
+      <summary class="zh">AI 会看到我的哪些数据?</summary>
+      <summary class="en">What data does the AI see?</summary>
+      <p class="zh">只有你主动触发理解的那条物品的文字信息(名字、备注、位置、你写的原句)和你的标签名列表,发给你自己选的服务商。照片不会发送;不触发 AI 就什么都不发。</p>
+      <p class="en">Only the text of the item you explicitly ask it to understand (name, notes, location, your original sentence) plus your tag names, sent to the provider you chose. Photos are never sent; nothing is sent unless you trigger AI.</p>
+    </details>
+    <details>
+      <summary class="zh">不想用了,怎么关掉?</summary>
+      <summary class="en">How do I turn it off?</summary>
+      <p class="zh">把设置里的 API Key 清空即可;录入框下的「用 AI 自动理解」开关也可以单独关。清空后 app 回到纯本地解析,一切照常。</p>
+      <p class="en">Just clear the API key in Settings (or untick "Understand with AI on input"). The app falls back to fully local parsing.</p>
+    </details>
+  </section>
+
+  <footer>
+    <p class="zh">何处 Whereabouts · v0.2.0 起内置本指南入口(设置 → AI)。问题反馈:<a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a>。价格与控制台路径核对于 2026-07,以服务商官网为准。</p>
+    <p class="en">Whereabouts links to this guide from Settings → AI (v0.2.0+). Feedback: <a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a>. Prices and console paths verified July 2026; providers' official sites prevail.</p>
+  </footer>
+</div>
+
+<script>
+  function setLang(l) {
+    document.documentElement.setAttribute('data-lang', l);
+    document.getElementById('btn-zh').classList.toggle('on', l === 'zh');
+    document.getElementById('btn-en').classList.toggle('on', l === 'en');
+    try { localStorage.setItem('hechu-guide-lang', l); } catch (e) {}
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('hechu-guide-lang'); } catch (e) {}
+    var sys = (navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    setLang(saved || sys);
+  })();
+</script>
+
+</body>
+</html>

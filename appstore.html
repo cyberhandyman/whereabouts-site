@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>何处 · App Store 上架手册</title>
+<link rel="canonical" href="https://whereabouts.top/appstore.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+</head>
+<body>
+
+<style>
+  :root {
+    --paper: #FBFBFE; --card: #FFFFFF; --ink: #20223A; --muted: #5C5F7A;
+    --faint: #9092AC; --line: #E4E5F1; --accent: #4B4FE0; --accent-2: #1493EE;
+    --accent-soft: #EEEFFC; --ok: #1F8A54; --ok-soft: #E7F5EC;
+    --warn: #A66A10; --warn-soft: #FBF3E2; --bad: #C24040; --bad-soft: #FBECEC;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+            "Microsoft YaHei", "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #131420; --card: #1B1D2E; --ink: #E9EAF4; --muted: #A2A5C0;
+      --faint: #767993; --line: #2C2E44; --accent: #7B7EF2; --accent-2: #3FAAF5;
+      --accent-soft: #262852; --ok: #4CC688; --ok-soft: #17321F;
+      --warn: #E0A34E; --warn-soft: #33270E; --bad: #E27070; --bad-soft: #391A1A;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #FBFBFE; --card: #FFFFFF; --ink: #20223A; --muted: #5C5F7A;
+    --faint: #9092AC; --line: #E4E5F1; --accent: #4B4FE0; --accent-2: #1493EE;
+    --accent-soft: #EEEFFC; --ok: #1F8A54; --ok-soft: #E7F5EC;
+    --warn: #A66A10; --warn-soft: #FBF3E2; --bad: #C24040; --bad-soft: #FBECEC;
+  }
+  :root[data-theme="dark"] {
+    --paper: #131420; --card: #1B1D2E; --ink: #E9EAF4; --muted: #A2A5C0;
+    --faint: #767993; --line: #2C2E44; --accent: #7B7EF2; --accent-2: #3FAAF5;
+    --accent-soft: #262852; --ok: #4CC688; --ok-soft: #17321F;
+    --warn: #E0A34E; --warn-soft: #33270E; --bad: #E27070; --bad-soft: #391A1A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); line-height: 1.8; font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 740px; margin: 0 auto; padding: 28px 20px 80px; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .appicon {
+    width: 42px; height: 42px; border-radius: 11px; flex: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; display: grid; place-items: center; font-size: 20px; font-weight: 800;
+  }
+  h1 { font-size: clamp(24px, 6vw, 32px); margin: 0 0 8px; font-weight: 800; letter-spacing: -0.015em; text-wrap: balance; }
+  .lede { color: var(--muted); font-size: 16px; margin: 0 0 20px; }
+  h2 { font-size: 20px; font-weight: 800; margin: 40px 0 6px; letter-spacing: -0.01em; scroll-margin-top: 16px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 20px 0 4px; }
+  p, li { color: var(--muted); font-size: 15px; }
+  b { color: var(--ink); }
+  ul, ol.plain { padding-left: 20px; margin: 8px 0; }
+  li { margin: 5px 0; }
+  a { color: var(--accent); }
+  code {
+    font-family: var(--mono); font-size: 0.86em; background: var(--accent-soft);
+    color: var(--accent); border-radius: 6px; padding: 1px 6px; word-break: break-all;
+  }
+  pre {
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.6;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; overflow-x: auto; color: var(--ink);
+  }
+  .note { border-radius: 12px; padding: 10px 14px; font-size: 13.5px; margin: 10px 0; }
+  .note.ok   { background: var(--ok-soft);   color: var(--ok); }
+  .note.warn { background: var(--warn-soft); color: var(--warn); }
+  .note.bad  { background: var(--bad-soft);  color: var(--bad); }
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  ol.steps > li { counter-increment: step; position: relative; padding: 0 0 20px 46px; }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 1px; width: 28px; height: 28px;
+    border-radius: 9px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums;
+  }
+  ol.steps > li:not(:last-child)::after {
+    content: ""; position: absolute; left: 13.5px; top: 34px; bottom: 4px;
+    width: 1.5px; background: var(--line);
+  }
+  ol.steps b.t { display: block; font-size: 16px; margin-bottom: 2px; color: var(--ink); }
+  .tablewrap { overflow-x: auto; margin: 12px 0; border: 1px solid var(--line); border-radius: 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 540px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: .05em; color: var(--faint); font-weight: 700; background: var(--accent-soft); }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .check { list-style: none; padding-left: 4px; }
+  .check li { padding-left: 26px; position: relative; }
+  .check li::before {
+    content: "☐"; position: absolute; left: 0; color: var(--accent); font-size: 16px;
+  }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+  nav.toc a {
+    font-size: 13px; text-decoration: none; color: var(--muted);
+    border: 1px solid var(--line); background: var(--card);
+    padding: 5px 12px; border-radius: 99px;
+  }
+  nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+  footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+</style>
+
+<div class="wrap">
+  <div class="brand">
+    <div class="appicon">处</div>
+    <div><b>何处 Whereabouts</b> · 内部发布手册</div>
+  </div>
+  <h1>Apple Developer 注册 + 双平台上架手册</h1>
+  <p class="lede">给 Bam 的一站式操作手册:从付 ¥688 年费到「何处」同时出现在 iOS 和 Mac App Store。工程侧的准备(双 target、合规 key、entitlements、图标、隐私政策网页)已经全部做好,你只需要走完下面这些<b>必须本人操作</b>的步骤。事实核对于 2026-07。</p>
+
+  <nav class="toc">
+    <a href="#enroll">① 注册开发者</a>
+    <a href="#xcode">② Xcode 配置</a>
+    <a href="#prep">③ 工程已备好的</a>
+    <a href="#record">④ 建 App record</a>
+    <a href="#meta">⑤ 元数据文案</a>
+    <a href="#shots">⑥ 截图</a>
+    <a href="#submit">⑦ 提交审核</a>
+    <a href="#risk">⑧ 风险与对策</a>
+    <a href="#icp">⑨ 大陆区 & ICP</a>
+  </nav>
+
+  <h2 id="enroll">① 注册 Apple Developer(必须本人,约 1–3 天)</h2>
+  <ol class="steps">
+    <li>
+      <b class="t">确认 Apple ID 已开双重认证</b>
+      <p>设置 → 你的名字 → 登录与安全 → 双重认证。没开的先开,注册硬性要求。</p>
+    </li>
+    <li>
+      <b class="t">用 iPhone 上的「Apple Developer」app 注册(推荐)</b>
+      <p>App Store 搜「Apple Developer」→ 登录 Apple ID → Enroll / 注册。过程中会要求<b>拍身份证 + 人脸验证</b>,姓名务必用身份证上的法定姓名(拼音),用昵称会被卡审核。</p>
+      <p>网页入口备选:<a href="https://developer.apple.com/programs/enroll/" target="_blank" rel="noopener">developer.apple.com/programs/enroll</a>。个人(Individual)即可 —— 卖家名会显示你的姓名;不需要 D-U-N-S(那是公司注册用的)。</p>
+    </li>
+    <li>
+      <b class="t">付年费 ¥688/年($99)</b>
+      <p>App 内注册直接用你 Apple 账户绑定的支付方式扣款 —— 大陆账户支持支付宝 / 微信支付 / 银联卡。注意不能用礼品卡余额。自动续费,可随时在订阅里取消。</p>
+    </li>
+    <li>
+      <b class="t">等审核通过邮件</b>
+      <p>个人注册一般 <b>48 小时~5 个工作日</b>。期间 Apple 可能打验证电话/发邮件,48 小时内要回复,否则会拖慢。通过后 <a href="https://appstoreconnect.apple.com" target="_blank" rel="noopener">App Store Connect</a> 就能登录了。</p>
+      <div class="note ok">免费 app 不需要签 Paid Applications 协议、不需要填银行税务信息 —— 默认的会员协议就够了。</div>
+    </li>
+  </ol>
+
+  <h2 id="xcode">② 注册通过后的 Xcode 一次性配置(10 分钟)</h2>
+  <ol class="steps">
+    <li>
+      <b class="t">Xcode 登录开发者账号</b>
+      <p>Xcode → Settings → Accounts → 「+」→ 登录你的 Apple ID。登录后能看到你的 Personal Team 变成付费 Team。</p>
+    </li>
+    <li>
+      <b class="t">把 Team ID 写进 project.yml</b>
+      <p>Accounts 页面点你的 Team → 右侧能看到 <b>Team ID</b>(10 位字母数字)。打开项目根目录 <code>project.yml</code>,把 <code>DEVELOPMENT_TEAM: ""</code> 改成 <code>DEVELOPMENT_TEAM: "你的TeamID"</code>,然后跑一次 <code>xcodegen generate</code>。之后两个 target 都会自动签名。</p>
+    </li>
+    <li>
+      <b class="t">给 macOS target 挂上 App Store 沙箱 entitlements</b>
+      <p>工程里已备好 <code>Whereabouts/Whereabouts-AppStore.entitlements</code>(沙箱 + 网络 + 用户选择文件读写)。<b>App Store 版必须开沙箱</b>。在 project.yml 的 Whereabouts target settings 里加一行再重新生成:</p>
+      <pre>CODE_SIGN_ENTITLEMENTS: Whereabouts/Whereabouts-AppStore.entitlements</pre>
+      <div class="note warn">⚠️ 开沙箱后 app 的数据目录会变(搬进 ~/Library/Containers)。你自己 Mac 上的旧数据不会自动迁移 —— 上架前记得先在旧版里「设置 → 数据 → 导出 JSON」,装了沙箱版后再导入。新用户无感。</div>
+      <div class="note warn">⚠️ 另一个上架前建议:目前 API key 明文存在偏好设置里(开发期为了 ad-hoc 签名不弹钥匙串框的取舍)。正式签名稳定后建议把 <code>AI/Keychain.swift</code> 换回真 Keychain 实现(Security 框架),几十行的事,不做也能过审(隐私政策里已如实说明)。</div>
+    </li>
+  </ol>
+
+  <h2 id="prep">③ 工程侧已经准备好的东西(无需操作,给你个底)</h2>
+  <ul class="check">
+    <li>双 target:<code>Whereabouts</code>(macOS)+ <code>WhereaboutsiOS</code>(iOS),<b>同一个 bundle id</b> <code>com.bamcope.whereabouts</code> → 满足 universal purchase(一条 App record 挂两个平台,用户一次获取全平台)。</li>
+    <li>Info.plist 合规:<code>LSApplicationCategoryType</code>(效率工具)、<code>ITSAppUsesNonExemptEncryption=false</code>(只用系统 HTTPS → 出口合规豁免,提交时不用再答加密问卷)。</li>
+    <li>图标:macOS .icns + iOS 1024 单尺寸 asset 都在。</li>
+    <li>隐私政策网页(中英,App Store 必填 URL)已上线,见 ⑤ 的链接表。</li>
+    <li>iOS 截图辅助:DEBUG 版支持 <code>--demo-data / --open-first / --tab-record / --tab-settings</code> 启动参数,拍图不用手动造数据。</li>
+    <li>版本号 0.2.0 / build 1,双端一致。</li>
+  </ul>
+
+  <h2 id="record">④ 在 App Store Connect 建 App record(15 分钟)</h2>
+  <ol class="steps">
+    <li>
+      <b class="t">注册 bundle ID</b>
+      <p><a href="https://developer.apple.com/account/resources/identifiers/list" target="_blank" rel="noopener">Certificates, Identifiers &amp; Profiles → Identifiers</a> → 「+」→ App IDs → App → Bundle ID 选 <b>Explicit</b>,填 <code>com.bamcope.whereabouts</code>。Capabilities 全部默认即可(本 app 不用推送/iCloud)。</p>
+    </li>
+    <li>
+      <b class="t">新建 App(一条 record,两个平台)</b>
+      <p>App Store Connect → My Apps → 「+」→ New App → 平台先勾 <b>iOS</b>,名称、主语言(简体中文)、bundle id、SKU(随便,如 <code>whereabouts-001</code>)。建好后在 app 页面左侧「<b>Add Platform</b>」再加 <b>macOS</b> —— 同一条 record,这就是 universal purchase 的正确姿势。</p>
+      <div class="note warn">app 名称「何处」两个字大概率被占用 —— 名称在每个地区唯一。备选:「何处 - 东西放哪了」「何处 Whereabouts」。名称可在提交前随时改。</div>
+    </li>
+    <li>
+      <b class="t">价格与销售范围</b>
+      <p>Pricing → <b>免费(0 元档)</b>。Availability:建议首发<b>去掉「中国大陆」</b>,其余全选(原因见 ⑨)。</p>
+    </li>
+  </ol>
+
+  <h2 id="meta">⑤ 元数据文案(直接复制)</h2>
+  <p>完整中英文案 + 关键词已放在仓库 <code>docs/app-store/metadata.md</code>,要点:</p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:120px">字段</th><th>建议值</th></tr>
+    <tr><td>名称</td><td>何处 - 东西放哪了(en: Whereabouts - Where I Put It)</td></tr>
+    <tr><td>副标题</td><td>一句话记下物品位置,AI 帮你归档(en: One sentence to remember where things are)</td></tr>
+    <tr><td>类别</td><td>主:效率 Productivity;副:生活 Lifestyle</td></tr>
+    <tr><td>年龄分级</td><td>全部问题答「无」→ 4+</td></tr>
+    <tr><td>隐私政策 URL</td><td>本手册链接表里的隐私政策页(App 隐私问卷全部选「不收集数据 Data Not Collected」—— 与政策一致)</td></tr>
+    <tr><td>支持 URL</td><td>AI 配置指南页(也可用它当 marketing URL)</td></tr>
+    <tr><td>版权</td><td>© 2026 Bam Cope</td></tr>
+  </table></div>
+
+  <h2 id="shots">⑥ 截图(每平台 1–10 张,官方 2026 规格)</h2>
+  <div class="tablewrap"><table>
+    <tr><th>平台</th><th>必传尺寸(竖屏 px)</th><th>怎么拍</th></tr>
+    <tr><td>iPhone 6.9"(必)</td><td class="num">1320×2868 或 1290×2796</td><td>模拟器选 iPhone 17 Pro / 16 Pro,<code>simctl launch ... --demo-data</code> 后 ⌘S 截图,原生分辨率即符合</td></tr>
+    <tr><td>iPad 13"(支持 iPad 就必传)</td><td class="num">2064×2752 或 2048×2732</td><td>iPad Pro 13" 模拟器同法</td></tr>
+    <tr><td>macOS</td><td class="num">2880×1800(或 2560×1600 / 1440×900 / 1280×800)</td><td>Retina 屏窗口截图后 sips 缩放到 16:10 目标尺寸</td></tr>
+  </table></div>
+  <p>建议每平台 4–6 张:首页(有数据)→ 记一条(解析预览)→ 详情(时间线)→ AI 设置 → 深色模式一张。JPG/PNG 均可。</p>
+
+  <h2 id="submit">⑦ 打包上传 + 提交审核</h2>
+  <ol class="steps">
+    <li>
+      <b class="t">Archive 两个平台</b>
+      <pre>cd 项目目录 && xcodegen generate
+# Xcode 里: scheme 选 WhereaboutsiOS → destination "Any iOS Device" → Product ▸ Archive
+# 再切 scheme Whereabouts → "Any Mac" → Product ▸ Archive</pre>
+      <p>Organizer 弹出后对每个 archive 点 <b>Distribute App → App Store Connect → Upload</b>,全部默认下一步。首次会自动帮你建发行证书。</p>
+    </li>
+    <li>
+      <b class="t">TestFlight 自测(强烈建议)</b>
+      <p>上传后 10–30 分钟构建出现在 App Store Connect → TestFlight。自己手机装 TestFlight 跑一遍核心流程(录入 / 详情 / AI / 导入导出)。</p>
+    </li>
+    <li>
+      <b class="t">填版本信息并提交</b>
+      <p>每个平台各自的版本页:选构建、贴截图、贴描述/关键词、填审核备注(下节模板)→ <b>Submit for Review</b>。两个平台可以分别提交,先后无所谓;<b>两个平台都过审后 universal purchase 自动生效</b>。审核一般 1–3 天。</p>
+    </li>
+  </ol>
+
+  <h2 id="risk">⑧ 审核风险与对策(重点看)</h2>
+  <p><b>唯一值得认真对待的风险:BYOK(用户自带 API key)。</b>有判例(Apple 开发者论坛 thread 763884)被以 Guideline 3.1.1 拒审,理由是「API key 是 IAP 之外解锁功能的机制」;但 App Store 上同类 BYOK app 大量在架,执行并不一致。「何处」的有利点:<b>app 完全免费、不配 key 也是全功能</b>(本地解析一切可用),AI 只是可选增强,没有任何「解锁/付费墙」语义。</p>
+  <h3>审核备注(App Review Notes)直接粘贴:</h3>
+  <pre>This app is completely free with all features fully functional offline.
+The optional "AI understanding" feature lets users bring their own API key
+(Anthropic or Volcengine) purchased directly from those providers for their
+own use. The key unlocks nothing in this app — it only lets the app send the
+user's own item text to the user's own AI account for parsing. No purchase
+is required or offered anywhere in the app. All data is stored locally;
+see the privacy policy. A demo requires no account: just type e.g.
+"充电宝在卧室抽屉" (power bank in bedroom drawer) on the Record tab.</pre>
+  <ul>
+    <li>被拒时先礼貌回复申诉(引用「app 免费、无解锁」),申诉不过再考虑 plan B:iOS 版隐藏自定义 endpoint 字段 / 把 AI 设置移到「高级」。</li>
+    <li>别在截图和描述里出现「买 key / 充值」类字样 —— 描述里只说「支持接入你自己的 AI 服务」。</li>
+  </ul>
+  <div class="note ok">其余都是低风险:无收集(隐私问卷选 Data Not Collected 即可)、加密豁免已声明、无第三方 SDK、4+ 分级。</div>
+
+  <h2 id="icp">⑨ 中国大陆区 & ICP 备案</h2>
+  <ul>
+    <li>2023-09 起<b>新 app 上架中国大陆区必须提供 ICP 备案号</b>,苹果强校验。</li>
+    <li><b>建议:首发不选大陆区</b>(港澳台 + 海外全开)。大陆用户装 app 常用外区账号,不影响你自己用(直接装本地构建即可)。</li>
+    <li>以后想上大陆区:通过阿里云/腾讯云提交「App 备案」(个人主体 + 工具类,通过率高,约 1–3 周),拿到备案号后在 App Store Connect 填入,再把大陆加回销售范围。</li>
+  </ul>
+
+  <h2>附:链接速查</h2>
+  <div class="tablewrap"><table>
+    <tr><th>用途</th><th>链接</th></tr>
+    <tr><td>注册入口</td><td><a href="https://developer.apple.com/programs/enroll/" target="_blank" rel="noopener">developer.apple.com/programs/enroll</a>(或 iPhone「Apple Developer」app)</td></tr>
+    <tr><td>App Store Connect</td><td><a href="https://appstoreconnect.apple.com" target="_blank" rel="noopener">appstoreconnect.apple.com</a></td></tr>
+    <tr><td>隐私政策页(填进 Connect)</td><td><a href="https://whereabouts.top/privacy.html" target="_blank" rel="noopener">whereabouts.top/privacy.html</a></td></tr>
+    <tr><td>AI 配置指南(支持 URL)</td><td><a href="https://whereabouts.top/guide.html" target="_blank" rel="noopener">whereabouts.top/guide.html</a></td></tr>
+    <tr><td>截图官方规格</td><td><a href="https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/" target="_blank" rel="noopener">Screenshot specifications</a></td></tr>
+    <tr><td>审核指南</td><td><a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">App Review Guidelines</a></td></tr>
+  </table></div>
+  <div class="note warn">文档现托管在自有域名 whereabouts.top(GitHub Pages)。更新内容:改仓库 cyberhandyman/whereabouts-site 里的 html 推送即可,URL 永久不变;app 内链接常量在 <code>Whereabouts/Shared/AppLinks.swift</code>。</div>
+
+  <footer>整理:Claude Code · 2026-07-07 · 事实来源:Apple 官方文档 / 开发者论坛 / 多方交叉核实,细节以 Apple 当日页面为准。</footer>
+</div>
+
+</body>
+</html>
