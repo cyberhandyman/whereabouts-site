@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>何处 · 使用完全教程 / Whereabouts Complete Guide</title>
+<link rel="canonical" href="https://whereabouts.top/tutorial.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+<style>
+  :root {
+    --paper: #FBFBFE; --card: #FFFFFF; --ink: #20223A; --muted: #5C5F7A;
+    --faint: #9092AC; --line: #E4E5F1; --accent: #4B4FE0; --accent-2: #1493EE;
+    --accent-soft: #EEEFFC; --ok: #1F8A54; --ok-soft: #E7F5EC;
+    --warn: #A66A10; --warn-soft: #FBF3E2;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+            "Microsoft YaHei", "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #131420; --card: #1B1D2E; --ink: #E9EAF4; --muted: #A2A5C0;
+      --faint: #767993; --line: #2C2E44; --accent: #7B7EF2; --accent-2: #3FAAF5;
+      --accent-soft: #262852; --ok: #4CC688; --ok-soft: #17321F;
+      --warn: #E0A34E; --warn-soft: #33270E;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+         font-family: var(--sans); line-height: 1.75; font-size: 16px;
+         -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 80px; }
+  [data-lang="zh"] .en { display: none; }
+  [data-lang="en"] .zh { display: none; }
+  .langbar { display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 6px; }
+  .langbar button { font: inherit; font-size: 13px; padding: 4px 14px; border-radius: 99px;
+    border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; }
+  .langbar button.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .appicon { width: 46px; height: 46px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; display: grid; place-items: center; font-size: 22px; font-weight: 800; }
+  h1 { font-size: clamp(26px, 6vw, 34px); line-height: 1.25; margin: 0 0 10px;
+       font-weight: 800; letter-spacing: -0.015em; text-wrap: balance; }
+  .lede { color: var(--muted); font-size: 16.5px; margin: 0 0 18px; max-width: 62ch; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+  nav.toc a { font-size: 13px; text-decoration: none; color: var(--muted);
+    border: 1px solid var(--line); background: var(--card); padding: 5px 12px; border-radius: 99px; }
+  nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+  section { margin-top: 42px; }
+  h2 { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 4px;
+       scroll-margin-top: 20px; }
+  h2 .em { color: var(--accent); }
+  .sectionsub { color: var(--faint); font-size: 14px; margin: 0 0 14px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 18px 0 6px; }
+  p, li { color: var(--muted); font-size: 15px; }
+  b { color: var(--ink); }
+  ul { padding-left: 20px; margin: 6px 0; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+  code { font-family: var(--mono); font-size: 0.88em; background: var(--accent-soft);
+         color: var(--accent); border-radius: 6px; padding: 1px 6px; }
+  kbd { font-family: var(--mono); font-size: 0.82em; border: 1px solid var(--line);
+        border-bottom-width: 2px; border-radius: 6px; padding: 1px 6px;
+        background: var(--card); color: var(--ink); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+          padding: 14px 18px; margin: 10px 0; }
+  .card p:first-child, .card ul:first-child { margin-top: 0; }
+  .note { border-radius: 12px; padding: 10px 14px; font-size: 13.5px; margin: 10px 0; }
+  .note.ok { background: var(--ok-soft); color: var(--ok); }
+  .note.warn { background: var(--warn-soft); color: var(--warn); }
+  .tablewrap { overflow-x: auto; margin: 12px 0; border: 1px solid var(--line); border-radius: 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 480px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: .05em; color: var(--faint); font-weight: 700;
+       background: var(--accent-soft); }
+  tr:last-child td { border-bottom: none; }
+  .gesture { display: inline-block; font-weight: 700; color: var(--ink);
+             background: var(--accent-soft); border-radius: 8px; padding: 0 8px; }
+  footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--faint); font-size: 13px; }
+  footer a { color: var(--faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="langbar" role="group" aria-label="Language">
+    <button id="btn-zh" class="on" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <header>
+    <div class="brand">
+      <div class="appicon">处</div>
+      <div><b>何处 Whereabouts</b></div>
+    </div>
+    <h1 class="zh">使用完全教程</h1>
+    <h1 class="en">The Complete Guide</h1>
+    <p class="lede zh">五分钟读完,常用功能全覆盖。何处的哲学只有一句:<b>写一句话,剩下的交给 app</b>。(iOS 与 macOS 通用;平台差异见文末对照表。)</p>
+    <p class="lede en">A five-minute read covering everything. The philosophy: <b>write one sentence, the app does the rest</b>. (Applies to iOS &amp; macOS; platform differences at the end.)</p>
+    <nav class="toc">
+      <a href="#record" class="zh">① 记一条</a><a href="#record" class="en">① Capture</a>
+      <a href="#gestures" class="zh">② 列表与手势</a><a href="#gestures" class="en">② List &amp; gestures</a>
+      <a href="#detail" class="zh">③ 详情与借出</a><a href="#detail" class="en">③ Detail &amp; lending</a>
+      <a href="#search" class="zh">④ 搜索筛选</a><a href="#search" class="en">④ Search</a>
+      <a href="#sync" class="zh">⑤ iCloud 同步</a><a href="#sync" class="en">⑤ iCloud Sync</a>
+      <a href="#ai" class="zh">⑥ AI 理解</a><a href="#ai" class="en">⑥ AI</a>
+      <a href="#more" class="zh">⑦ 标签·通知·数据</a><a href="#more" class="en">⑦ Tags·Alerts·Data</a>
+      <a href="#platform" class="zh">⑧ 双平台对照</a><a href="#platform" class="en">⑧ Platforms</a>
+    </nav>
+  </header>
+
+  <!-- ① 记一条 -->
+  <section id="record">
+    <h2><span class="em">①</span> <span class="zh">记一条 —— 一句话录入</span><span class="en">Capture — one sentence</span></h2>
+    <p class="sectionsub zh">iOS:底部「记一条」tab(或首页右上角 ✏️)。macOS:主窗口顶部输入框(⌘N 聚焦)。</p>
+    <p class="sectionsub en">iOS: the Record tab (or ✏️ top-right on Home). macOS: the input bar (⌘N).</p>
+    <div class="card">
+      <p class="zh">直接用自然语言写,app 自动拆出名字、层级位置、型号、颜色、容量、购买信息:</p>
+      <p class="en">Write naturally; the app splits out name, nested location, model, color, capacity, purchase info:</p>
+      <ul>
+        <li><code>充电宝在卧室五斗柜第二格抽屉</code></li>
+        <li><code>护照:书房保险箱</code></li>
+        <li><code>Sony WH-1000XM5 黑色 去年在京东买的 放客厅电视柜</code></li>
+        <li class="en"><code>passport in the study safe</code> · <code>3 chargers on the TV stand</code></li>
+      </ul>
+    </div>
+    <ul>
+      <li class="zh"><b>一次记多条</b>:换行、逗号、分号、「然后 / 还有」都能分隔。</li>
+      <li class="en"><b>Batch capture</b>: separate with newlines, commas, or semicolons.</li>
+      <li class="zh"><b>语音输入</b>(iOS):点「记下来」旁的 🎤,说话实时转文字。</li>
+      <li class="en"><b>Voice input</b> (iOS): tap the 🎤 next to Save and speak.</li>
+      <li class="zh"><b>位置可以省略</b>:先记下,详情页里随时补。</li>
+      <li class="en"><b>Location is optional</b> — add it later from the detail page.</li>
+      <li class="zh"><b>同名智能处理</b>:再次输入已有物品会弹窗问你是「更新位置 / 补充信息」还是「另起一条」;写「X 的型号是 Y」直接更新已有物品字段。</li>
+      <li class="en"><b>Duplicates handled</b>: re-entering an existing item asks whether to update it or create anew; "X's model is Y" updates fields in place.</li>
+    </ul>
+  </section>
+
+  <!-- ② 列表与手势 -->
+  <section id="gestures">
+    <h2><span class="em">②</span> <span class="zh">列表与手势</span><span class="en">The list &amp; gestures</span></h2>
+    <div class="tablewrap"><table>
+      <thead><tr>
+        <th class="zh">操作</th><th class="en">Action</th>
+        <th class="zh">效果</th><th class="en">Result</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="gesture zh">右滑</span><span class="gesture en">Swipe right</span></td>
+            <td class="zh">置顶(排最前,可开定期提醒)</td><td class="en">Pin (stays on top, enables reminders)</td></tr>
+        <tr><td><span class="gesture zh">左滑</span><span class="gesture en">Swipe left</span></td>
+            <td class="zh">删除(进回收站,可找回)或编辑</td><td class="en">Delete (to Trash, recoverable) or edit</td></tr>
+        <tr><td><span class="gesture zh">长按</span><span class="gesture en">Long-press</span></td>
+            <td class="zh">完整菜单:置顶 / 编辑 / 借给… / 用 AI 理解 / 删除</td>
+            <td class="en">Full menu: pin / edit / lend / AI / delete</td></tr>
+        <tr><td><span class="gesture zh">下拉</span><span class="gesture en">Pull down</span></td>
+            <td class="zh">从 iCloud 手动同步(见 ⑤)</td><td class="en">Manual iCloud sync (see ⑤)</td></tr>
+        <tr><td><span class="gesture zh">选择</span><span class="gesture en">Select</span></td>
+            <td class="zh">左上角「选择」进多选,底部批量删除</td><td class="en">Tap Select for multi-select and batch delete</td></tr>
+      </tbody>
+    </table></div>
+    <p class="zh">首页顶部还有:统计瓷砖(物品/房间/置顶/借出)、房间筛选 chips、回收站(右上角 ⋯ 菜单里)。macOS 用右键菜单与工具栏完成同样操作,还支持 ⌘/⇧ 多选与 Delete 键删除。</p>
+    <p class="en">The home screen also has stat tiles, room filter chips, and the Trash (under the ⋯ menu). On macOS use right-click menus, ⌘/⇧ multi-select, and the Delete key.</p>
+  </section>
+
+  <!-- ③ 详情与借出 -->
+  <section id="detail">
+    <h2><span class="em">③</span> <span class="zh">详情页:位置、时间线、借出</span><span class="en">Detail: location, timeline, lending</span></h2>
+    <div class="card">
+      <p class="zh"><b>「用过吗?」四个位置按钮</b> —— 点开物品通常意味着你在找它,用完顺手告诉 app:</p>
+      <p class="en"><b>Four location buttons</b> — opening an item usually means you're looking for it; tell the app what happened:</p>
+      <ul>
+        <li class="zh">🟢 还在原位 · 🔵 放回原位了 · 🟠 位置变了…(改新位置) · 🔴 不知道在哪</li>
+        <li class="en">🟢 Still there · 🔵 Put it back · 🟠 Moved (enter new spot) · 🔴 Lost track</li>
+        <li class="zh">每次动作都进<b>时间线</b>:位置变化 + 字段修改(含 AI 修改,可一键还原名字)全记录。</li>
+        <li class="en">Every action lands on the <b>timeline</b>: moves + field edits (incl. AI edits, with one-tap name restore).</li>
+      </ul>
+    </div>
+    <ul>
+      <li class="zh"><b>借出</b>:紫色「借给…」按钮记下借给谁;归还点顶部橙色徽章上的「归还」。借出的东西列表里有紫色标记,筛选面板有「借出」一栏,搜索借的人名字也能找到。</li>
+      <li class="en"><b>Lending</b>: the purple "Lend to…" button records the borrower; return via the orange badge. Lent items are marked, filterable, and searchable by borrower name.</li>
+      <li class="zh"><b>关联物品</b>:把配件和主机连起来(如 iPad 和它的笔),详情页互相跳转,一组最多 8 件。</li>
+      <li class="en"><b>Related items</b>: link accessories to the main device; jump between them; up to 8 per group.</li>
+      <li class="zh"><b>照片</b>:编辑页添加,详情页点击全屏、双指缩放。</li>
+      <li class="en"><b>Photos</b>: add in the editor; tap for full screen, pinch to zoom.</li>
+    </ul>
+  </section>
+
+  <!-- ④ 搜索筛选 -->
+  <section id="search">
+    <h2><span class="em">④</span> <span class="zh">搜索与筛选</span><span class="en">Search &amp; filter</span></h2>
+    <ul>
+      <li class="zh"><b>搜索</b>覆盖:名字、备注、位置路径、型号、颜色、渠道、容量、<b>借出人</b>、<b>标签名</b>。iOS 下拉出搜索框;macOS ⌘F。</li>
+      <li class="en"><b>Search</b> covers name, notes, location path, model, color, source, capacity, <b>borrower</b>, and <b>tag names</b>. Pull down on iOS; ⌘F on macOS.</li>
+      <li class="zh"><b>房间 chips</b>(iOS)/ <b>facet 行</b>(macOS:房间、位置、借出、渠道、年份、品牌)可以叠加组合,比如「卧室 + 借出去的」。</li>
+      <li class="en"><b>Room chips</b> (iOS) / <b>facet rows</b> (macOS: room, location, lent, source, year, brand) combine freely — e.g. "bedroom + lent out".</li>
+      <li class="zh">位置是<b>树状</b>的:房间 &gt; 家具 &gt; 格子。同名位置自动复用,改名整棵子树跟着变;macOS 设置 → 位置里可整理(合并/重命名/删除)。</li>
+      <li class="en">Locations form a <b>tree</b>: room &gt; furniture &gt; drawer. Same-name spots are reused; renames cascade; tidy them up in macOS Settings → Locations.</li>
+    </ul>
+  </section>
+
+  <!-- ⑤ iCloud 同步 -->
+  <section id="sync">
+    <h2><span class="em">⑤</span> <span class="zh">iCloud 同步(多设备)</span><span class="en">iCloud Sync</span></h2>
+    <p class="sectionsub zh">Mac 和 iPhone 登录同一个 Apple 账户即可,零配置。</p>
+    <p class="sectionsub en">Sign in with the same Apple Account on both devices — zero config.</p>
+    <div class="card">
+      <ul>
+        <li class="zh"><b>实时同步</b>:开关默认打开(设置 → iCloud 同步),改动自动在设备间流动,通常几秒到一分钟。</li>
+        <li class="en"><b>Live sync</b> is on by default (Settings → iCloud Sync); changes flow across devices within seconds to a minute.</li>
+        <li class="zh"><b>手动同步</b>:iOS 首页<b>下拉刷新</b>或点右上角 ☁️;设置 → 数据里也有「立即同步」。它会拉取其它设备写到 iCloud 云盘的数据文件、<b>合并去重</b>(同名同位置只留一条),再把本机最新数据写回去。</li>
+        <li class="en"><b>Manual sync</b>: pull-to-refresh or tap ☁️ on iOS Home (also "Sync Now" in Settings → Data). It pulls the data file other devices wrote to iCloud Drive, <b>merges with de-duplication</b>, and writes back.</li>
+        <li class="zh"><b>看得见的备份</b>:数据文件就在 iCloud 云盘/<code>Whereabouts</code>/ 里(「文件」app / 访达可见),退出 app 时自动更新。</li>
+        <li class="en"><b>A visible backup</b>: the file lives in iCloud Drive/<code>Whereabouts</code>/ (visible in Files / Finder), refreshed on quit.</li>
+      </ul>
+    </div>
+    <div class="note ok zh">🔒 全部走你自己 Apple 账户的私有空间,开发者永远看不到任何内容。不登录 iCloud 也能用 —— app 自动落回纯本机模式。</div>
+    <div class="note ok en">🔒 Everything stays in your own Apple Account's private space; the developer can never see it. No iCloud? The app just runs in local-only mode.</div>
+  </section>
+
+  <!-- ⑥ AI -->
+  <section id="ai">
+    <h2><span class="em">⑥</span> <span class="zh">AI 理解(可选,但强烈推荐)</span><span class="en">AI understanding (optional, recommended)</span></h2>
+    <ul>
+      <li class="zh">写得再随意也能拆得干干净净,还会自动挑分类标签、修错别字、把「门口电梯间鞋架上方」拆成正确的位置层级。</li>
+      <li class="en">Messy input parses cleanly; it also picks a category tag, fixes typos, and splits compound locations correctly.</li>
+      <li class="zh">配置只要 10 分钟:<a href="/guide.html">图文配置教程</a>(火山引擎 / Claude 两条路线)。<b>测试连接成功后,录入自动 AI 理解会自动打开</b>。</li>
+      <li class="en">Setup takes ~10 minutes: see the <a href="/guide.html">illustrated setup guide</a>. Once the connection test passes, AI-on-input turns on automatically.</li>
+      <li class="zh">费用:理解一件约 2 分钱;火山引擎新用户送大量免费额度,轻度使用这辈子花不完。用量和估算费用在「用AI理解」设置页里随时可查。</li>
+      <li class="en">Cost: ~half a cent per item; Volcengine's free tier lasts ages. Usage & cost estimates live in the AI settings page.</li>
+      <li class="zh">手动触发:列表长按(iOS)/ 右键(macOS)→「用 AI 理解」,老数据也能批量洗一遍。</li>
+      <li class="en">Manual trigger: long-press (iOS) / right-click (macOS) → "Understand with AI" — great for cleaning old entries.</li>
+    </ul>
+  </section>
+
+  <!-- ⑦ 更多 -->
+  <section id="more">
+    <h2><span class="em">⑦</span> <span class="zh">标签 · 通知 · 数据</span><span class="en">Tags · Reminders · Data</span></h2>
+    <h3 class="zh">标签</h3><h3 class="en">Tags</h3>
+    <p class="zh">14 个预设分类开箱即用;「设置 → 标签管理」里可改名、换色(9 色调色板)、删除、新建。录入时按物品名自动建议;AI 开启后由 AI 权威分类。</p>
+    <p class="en">14 presets out of the box; rename/recolor/delete/create under Settings → Manage Tags. Auto-suggested on input; AI takes over classification when enabled.</p>
+    <h3 class="zh">定期提醒</h3><h3 class="en">Reminders</h3>
+    <p class="zh">置顶的重要物品可收「还在原位吗?」本地通知:频率(每天/每周/每月)、时间、文案模板都可自定义;点通知直达该物品。完全本地,无网络。</p>
+    <p class="en">Pinned items can get "still there?" local notifications — frequency, time, and message template are customizable; tapping jumps to the item. Fully local.</p>
+    <h3 class="zh">数据进出</h3><h3 class="en">Data in &amp; out</h3>
+    <p class="zh">设置 → 数据:全量 JSON 导出(含照片)/ 导入(默认去重)。数据永远是你的,随时带走。</p>
+    <p class="en">Settings → Data: full JSON export (photos included) / import (dedup by default). Your data is always yours.</p>
+  </section>
+
+  <!-- ⑧ 平台对照 -->
+  <section id="platform">
+    <h2><span class="em">⑧</span> <span class="zh">双平台对照</span><span class="en">iOS vs macOS</span></h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th></th><th>iOS</th><th>macOS</th></tr></thead>
+      <tbody>
+        <tr><td class="zh">快速录入</td><td class="en">Quick capture</td>
+            <td class="zh">「记一条」tab + 🎤 语音</td><td class="en">Record tab + 🎤 voice</td>
+            <td class="zh">顶部输入框(⌘N)、菜单栏图标、全局快捷键 ⌥⌘N 小窗</td><td class="en">Input bar (⌘N), menu-bar icon, global hotkey ⌥⌘N</td></tr>
+        <tr><td class="zh">批量操作</td><td class="en">Batch ops</td>
+            <td class="zh">「选择」多选删除</td><td class="en">Select → batch delete</td>
+            <td class="zh">⌘/⇧ 多选 + 批量设标签/位置/渠道/AI 理解</td><td class="en">⌘/⇧ select + batch tag/location/source/AI</td></tr>
+        <tr><td class="zh">位置整理</td><td class="en">Location cleanup</td>
+            <td class="zh">详情页逐条改</td><td class="en">Per-item</td>
+            <td class="zh">设置 → 位置:树形管理、合并、批量删除</td><td class="en">Settings → Locations: tree view, merge, batch</td></tr>
+        <tr><td class="zh">快捷键</td><td class="en">Shortcuts</td>
+            <td>—</td>
+            <td class="zh">⌘N 录入 · ⌘F 搜索 · ⌘? 帮助 · ⌥⌘N 全局小窗</td><td class="en">⌘N new · ⌘F search · ⌘? help · ⌥⌘N global</td></tr>
+        <tr><td class="zh">其余功能</td><td class="en">Everything else</td>
+            <td colspan="2" class="zh" style="text-align:center">完全一致,数据经 iCloud 无缝互通</td>
+            <td colspan="2" class="en" style="text-align:center">Identical — data flows seamlessly via iCloud</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer>
+    <p class="zh">何处 Whereabouts v0.2.0 · <a href="/">首页</a> · <a href="/guide.html">AI 配置教程</a> · <a href="/privacy.html">隐私政策</a> · 反馈:<a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a></p>
+    <p class="en">Whereabouts v0.2.0 · <a href="/">Home</a> · <a href="/guide.html">AI setup guide</a> · <a href="/privacy.html">Privacy</a> · Feedback: <a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a></p>
+  </footer>
+</div>
+<script>
+  function setLang(l) {
+    document.documentElement.setAttribute('data-lang', l);
+    document.getElementById('btn-zh').classList.toggle('on', l === 'zh');
+    document.getElementById('btn-en').classList.toggle('on', l === 'en');
+    try { localStorage.setItem('hechu-tutorial-lang', l); } catch (e) {}
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('hechu-tutorial-lang'); } catch (e) {}
+    var sys = (navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    setLang(saved || sys);
+  })();
+</script>
+</body>
+</html>
