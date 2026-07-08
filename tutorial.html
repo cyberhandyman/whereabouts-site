@@ -158,8 +158,8 @@
             <td class="zh">左上角「选择」进多选,底部批量删除</td><td class="en">Tap Select for multi-select and batch delete</td></tr>
       </tbody>
     </table></div>
-    <p class="zh">首页顶部还有:统计瓷砖(物品/房间/置顶/借出)、房间筛选 chips、回收站(右上角 ⋯ 菜单里)。macOS 用右键菜单与工具栏完成同样操作,还支持 ⌘/⇧ 多选与 Delete 键删除。</p>
-    <p class="en">The home screen also has stat tiles, room filter chips, and the Trash (under the ⋯ menu). On macOS use right-click menus, ⌘/⇧ multi-select, and the Delete key.</p>
+    <p class="zh">首页顶部的统计瓷砖同时就是筛选器(见「搜索与筛选」);多选模式下右上角 ⋯ 变成批量菜单(设标签/位置/渠道/AI理解/删除);回收站在 ⋯ 菜单里。macOS 用右键菜单与工具栏完成同样操作,还支持 ⌘/⇧ 多选与 Delete 键删除。</p>
+    <p class="en">The stat tiles double as filters (see Search); in Select mode the ⋯ menu becomes a batch menu (tags/location/source/AI/delete); Trash lives under ⋯. On macOS use right-click menus, ⌘/⇧ multi-select, and the Delete key.</p>
   </section>
 
   <!-- ③ 详情与借出 -->
@@ -191,8 +191,8 @@
     <ul>
       <li class="zh"><b>搜索</b>覆盖:名字、备注、位置路径、型号、颜色、渠道、容量、<b>借出人</b>、<b>标签名</b>。iOS 下拉出搜索框;macOS ⌘F。</li>
       <li class="en"><b>Search</b> covers name, notes, location path, model, color, source, capacity, <b>borrower</b>, and <b>tag names</b>. Pull down on iOS; ⌘F on macOS.</li>
-      <li class="zh"><b>房间 chips</b>(iOS)/ <b>facet 行</b>(macOS:房间、位置、借出、渠道、年份、品牌)可以叠加组合,比如「卧室 + 借出去的」。</li>
-      <li class="en"><b>Room chips</b> (iOS) / <b>facet rows</b> (macOS: room, location, lent, source, year, brand) combine freely — e.g. "bedroom + lent out".</li>
+      <li class="zh"><b>统计瓷砖即筛选器</b>(iOS):点「房间/渠道/品牌/年份」瓷砖下拉选一个,点「置顶/借出」直接筛,再点一次取消,点「物品」清除全部;<b>facet 行</b>(macOS:房间、位置、借出、渠道、年份、品牌)同理可叠加,比如「卧室 + 借出去的」。</li>
+      <li class="en"><b>Stat tiles are filters</b> (iOS): tap Room/Source/Brand/Year tiles for a dropdown, tap Pinned/Lent to toggle, tap again to clear, tap Items to clear all; <b>facet rows</b> (macOS) combine the same way — e.g. "bedroom + lent out".</li>
       <li class="zh">位置是<b>树状</b>的:房间 &gt; 家具 &gt; 格子。同名位置自动复用,改名整棵子树跟着变;macOS 设置 → 位置里可整理(合并/重命名/删除)。</li>
       <li class="en">Locations form a <b>tree</b>: room &gt; furniture &gt; drawer. Same-name spots are reused; renames cascade; tidy them up in macOS Settings → Locations.</li>
     </ul>
@@ -227,8 +227,8 @@
       <li class="en">Setup takes ~10 minutes: see the <a href="/guide.html">illustrated setup guide</a>. Once the connection test passes, AI-on-input turns on automatically.</li>
       <li class="zh">费用:理解一件约 2 分钱;火山引擎新用户送大量免费额度,轻度使用这辈子花不完。用量和估算费用在「用AI理解」设置页里随时可查。</li>
       <li class="en">Cost: ~half a cent per item; Volcengine's free tier lasts ages. Usage & cost estimates live in the AI settings page.</li>
-      <li class="zh">手动触发:列表长按(iOS)/ 右键(macOS)→「用 AI 理解」,老数据也能批量洗一遍。</li>
-      <li class="en">Manual trigger: long-press (iOS) / right-click (macOS) → "Understand with AI" — great for cleaning old entries.</li>
+      <li class="zh">手动触发:列表长按(iOS)/ 右键(macOS)→「用 AI 理解」,老数据也能批量洗一遍。理解完成后行尾出现 ✓ 和「一键还原」;时间线里 AI 改过的名字也随时可还原。</li>
+      <li class="en">Manual trigger: long-press (iOS) / right-click (macOS) → "Understand with AI". After it finishes, a ✓ and an Undo pill appear on the row; AI renames can always be reverted from the timeline.</li>
     </ul>
   </section>
 
@@ -259,8 +259,7 @@
             <td class="zh">「选择」多选删除</td><td class="en">Select → batch delete</td>
             <td class="zh">⌘/⇧ 多选 + 批量设标签/位置/渠道/AI 理解</td><td class="en">⌘/⇧ select + batch tag/location/source/AI</td></tr>
         <tr><td class="zh">位置整理</td><td class="en">Location cleanup</td>
-            <td class="zh">详情页逐条改</td><td class="en">Per-item</td>
-            <td class="zh">设置 → 位置:树形管理、合并、批量删除</td><td class="en">Settings → Locations: tree view, merge, batch</td></tr>
+            <td class="zh" colspan="2" style="text-align:center">双端一致:设置 → 位置管理(树形、重命名、合并、批量删除)</td><td class="en" colspan="2" style="text-align:center">Identical: Settings → Manage Locations (tree, rename, merge, batch)</td></tr>
         <tr><td class="zh">快捷键</td><td class="en">Shortcuts</td>
             <td>—</td>
             <td class="zh">⌘N 录入 · ⌘F 搜索 · ⌘? 帮助 · ⌥⌘N 全局小窗</td><td class="en">⌘N new · ⌘F search · ⌘? help · ⌥⌘N global</td></tr>
