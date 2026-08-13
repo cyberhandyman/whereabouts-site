@@ -1,21 +1,51 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>念念 Murmur — 再也不忘词的免费提词器</title>
-<meta name="description" content="念念（Murmur）：最好用的 iPad/iPhone 免费提词器。中英文智能跟读、提词拍摄无水印、蓝牙与双机遥控、文档导入。无内购、无广告、无需注册。">
+<title>Murmur 念念 — Free Teleprompter</title>
+<meta name="description" content="Murmur (念念): the best free teleprompter for iPad &amp; iPhone. Voice tracking in English and Chinese, watermark-free recording, Bluetooth &amp; device remote, document import. No IAP, no ads, no sign-up. 最好用的免费提词器。">
+<script>
+(function () {
+  var lang = null;
+  try { lang = localStorage.getItem('murmur-lang'); } catch (e) {}
+  if (lang !== 'en' && lang !== 'zh') {
+    var nav = (navigator.language || '').toLowerCase();
+    lang = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+})();
+function setLang(l) {
+  document.documentElement.setAttribute('data-lang', l);
+  document.documentElement.lang = l === 'zh' ? 'zh-Hans' : 'en';
+  try { localStorage.setItem('murmur-lang', l); } catch (e) {}
+}
+</script>
 <style>
   :root {
     --bg: #0B0E13; --surface: #141923; --line: #232B38;
     --text: #E9EDF3; --muted: #8E99A8; --amber: #FFC53D; --green: #3ECF8E;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html[data-lang="en"] .l-zh { display: none !important; }
+  html[data-lang="zh"] .l-en { display: none !important; }
   body {
     background: var(--bg); color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     line-height: 1.7;
   }
+  .langswitch {
+    position: fixed; top: 14px; right: 14px; z-index: 10; display: flex;
+    background: rgba(20,25,35,.85); border: 1px solid var(--line); border-radius: 999px;
+    overflow: hidden; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .langswitch button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 15px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  html[data-lang="en"] .langswitch [data-set="en"],
+  html[data-lang="zh"] .langswitch [data-set="zh"] { background: var(--amber); color: #111; }
   .wrap { max-width: 960px; margin: 0 auto; padding: 56px 22px 60px; }
   header { text-align: center; margin-bottom: 44px; }
   .logo {
@@ -26,7 +56,7 @@
   h1 { font-size: 46px; font-weight: 800; letter-spacing: .02em; }
   h1 small { display: block; font-size: 19px; color: var(--amber); font-weight: 700; letter-spacing: .25em; margin-top: 2px; }
   .tagline { font-size: 20px; font-weight: 600; margin-top: 14px; }
-  .tagline-en { color: var(--muted); font-size: 15px; margin-top: 4px; }
+  .tagline-sub { color: var(--muted); font-size: 15px; margin-top: 4px; }
   .badges { margin-top: 16px; color: var(--amber); font-size: 14.5px; font-weight: 600; letter-spacing: .05em; }
   .cta { margin-top: 22px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .cta a {
@@ -44,7 +74,6 @@
   .card h3 { font-size: 17px; margin-bottom: 6px; }
   .card h3 span { color: var(--amber); margin-right: 8px; }
   .card p { color: var(--muted); font-size: 14.5px; }
-  .card .en { display: block; margin-top: 6px; font-size: 13px; opacity: .75; }
   .free {
     margin: 44px 0 0; text-align: center; background: var(--surface);
     border: 1px solid var(--line); border-radius: 16px; padding: 26px 20px;
@@ -59,52 +88,90 @@
 </style>
 </head>
 <body>
+<div class="langswitch" role="group" aria-label="Language">
+  <button data-set="en" onclick="setLang('en')">EN</button>
+  <button data-set="zh" onclick="setLang('zh')">中文</button>
+</div>
+
 <div class="wrap">
   <header>
     <div class="logo">
-      <svg viewBox="0 0 48 48" fill="none">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
         <rect x="10" y="12" width="30" height="4.6" rx="2.3" fill="#E7ECF4"/>
         <path d="M2 21.7 L9 25.3 L2 28.9 Z" fill="#FFC53D"/>
         <rect x="10" y="23" width="26" height="4.6" rx="2.3" fill="#FFC53D"/>
         <rect x="10" y="34" width="22" height="4.6" rx="2.3" fill="#E7ECF4"/>
       </svg>
     </div>
-    <h1>念念<small>MURMUR</small></h1>
-    <div class="tagline">再也不忘词 —— 最好用的 iPad / iPhone 免费提词器</div>
-    <div class="tagline-en">Never forget your lines — the best free teleprompter for iPad &amp; iPhone</div>
-    <div class="badges">无内购 · 无水印 · 无广告 · 无需注册</div>
+    <h1 class="l-en">Murmur<small>念念</small></h1>
+    <h1 class="l-zh">念念<small>MURMUR</small></h1>
+
+    <div class="tagline l-en">Never forget your lines — the best free teleprompter for iPad &amp; iPhone</div>
+    <div class="tagline-sub l-en">Voice-tracked scrolling in English and Chinese, fully on-device</div>
+    <div class="tagline l-zh">再也不忘词 —— 最好用的 iPad / iPhone 免费提词器</div>
+    <div class="tagline-sub l-zh">中英文智能跟读 · 完全端上识别</div>
+
+    <div class="badges l-en">No IAP · No watermark · No ads · No sign-up</div>
+    <div class="badges l-zh">无内购 · 无水印 · 无广告 · 无需注册</div>
+
     <div class="cta">
-      <a class="primary" href="https://apps.apple.com/app/id0000000000">App Store 下载（上架审核中）</a>
-      <a class="secondary" href="./support/">技术支持</a>
-      <a class="secondary" href="./privacy/">隐私政策</a>
+      <a class="primary l-en" href="https://apps.apple.com/app/id0000000000">Download on the App Store (in review)</a>
+      <a class="primary l-zh" href="https://apps.apple.com/app/id0000000000">App Store 下载（上架审核中）</a>
+      <a class="secondary l-en" href="./support/">Support</a>
+      <a class="secondary l-zh" href="./support/">技术支持</a>
+      <a class="secondary l-en" href="./privacy/">Privacy</a>
+      <a class="secondary l-zh" href="./privacy/">隐私政策</a>
     </div>
   </header>
 
-  <div class="shots">
+  <div class="shots l-en">
+    <figure><img src="img/intro-en.jpg" alt="Murmur feature overview"><figcaption>Every feature, completely free</figcaption></figure>
+    <figure><img src="img/prompter-en.jpg" alt="Prompter screen"><figcaption>Pro prompting · reading guide · every knob adjustable</figcaption></figure>
+    <figure><img src="img/remote-en.jpg" alt="Device remote screen"><figcaption>Control an iPad from your iPhone, in real time</figcaption></figure>
+  </div>
+  <div class="shots l-zh">
     <figure><img src="img/intro.jpg" alt="念念功能介绍页"><figcaption>完全免费的全功能提词器</figcaption></figure>
     <figure><img src="img/prompter.jpg" alt="提词界面"><figcaption>专业提词 · 阅读参考线 · 全参数可调</figcaption></figure>
     <figure><img src="img/remote.jpg" alt="双机遥控界面"><figcaption>iPhone 遥控 iPad · 实时同步</figcaption></figure>
   </div>
 
-  <div class="features">
-    <div class="card"><h3><span>🎤</span>智能跟读</h3><p>说到哪滚到哪：识别普通话或英文，停顿即停、跳读自动追上，完全离线。<span class="en">Voice tracking follows your Chinese or English speech, fully on-device.</span></p></div>
-    <div class="card"><h3><span>🎛️</span>随心调节</h3><p>字号、字重、字宽、行距、页面宽度、滚动速度，全都可调。<span class="en">Font size, weight, width, line spacing, page width and speed.</span></p></div>
-    <div class="card"><h3><span>🪞</span>镜像模式</h3><p>水平 / 垂直镜像，适配分光镜提词器硬件。<span class="en">Horizontal and vertical mirroring for beam splitter rigs.</span></p></div>
-    <div class="card"><h3><span>🎥</span>提词拍摄</h3><p>边提词边录像，1080p 无水印，自动保存到相册，录制中跟读照常工作。<span class="en">Record while prompting, no watermark, saved to Photos.</span></p></div>
-    <div class="card"><h3><span>🎮</span>蓝牙与双机遥控</h3><p>翻页器、蓝牙键盘即连即用；另一台 iPhone / iPad 秒变遥控台，还能远程编辑台词。<span class="en">Bluetooth remotes work instantly; control an iPad from your iPhone.</span></p></div>
-    <div class="card"><h3><span>📄</span>文档导入</h3><p>支持 docx、doc、md、txt、rtf、pdf，复杂排版可挑选段落导入。<span class="en">Import docx, doc, md, txt, rtf and pdf — pick the parts you need.</span></p></div>
-    <div class="card"><h3><span>🎁</span>完全免费</h3><p>稿件无限、字数无限、功能永久免费，没有任何付费墙。<span class="en">Every feature is free forever. No paywalls, period.</span></p></div>
+  <div class="features l-en">
+    <div class="card"><h3><span>🎤</span>Voice tracking</h3><p>The prompter scrolls as you speak English or Chinese: pause and it waits, skip ahead and it catches up. Fully on-device and offline.</p></div>
+    <div class="card"><h3><span>🎛️</span>Fully adjustable</h3><p>Font size, weight, width, line spacing, page width and scroll speed — every knob is yours.</p></div>
+    <div class="card"><h3><span>🪞</span>Mirror mode</h3><p>Horizontal and vertical mirroring for beam splitter teleprompter rigs.</p></div>
+    <div class="card"><h3><span>🎥</span>Record while prompting</h3><p>Film with the script docked near the lens. 1080p, no watermark, saved straight to Photos — voice tracking keeps working while recording.</p></div>
+    <div class="card"><h3><span>🎮</span>Bluetooth &amp; device remote</h3><p>Page turners, clicker rings and keyboards work instantly. A second iPhone or iPad becomes a full control console — even for live script editing.</p></div>
+    <div class="card"><h3><span>📄</span>Document import</h3><p>docx, doc, md, txt, rtf and pdf. Pick exactly the paragraphs you need.</p></div>
+    <div class="card"><h3><span>🎁</span>Free forever</h3><p>Unlimited scripts, unlimited length, every feature free forever. No paywalls, period.</p></div>
+  </div>
+  <div class="features l-zh">
+    <div class="card"><h3><span>🎤</span>智能跟读</h3><p>说到哪滚到哪：识别普通话或英文，停顿即停、跳读自动追上，完全离线。</p></div>
+    <div class="card"><h3><span>🎛️</span>随心调节</h3><p>字号、字重、字宽、行距、页面宽度、滚动速度，全都可调。</p></div>
+    <div class="card"><h3><span>🪞</span>镜像模式</h3><p>水平 / 垂直镜像，适配分光镜提词器硬件。</p></div>
+    <div class="card"><h3><span>🎥</span>提词拍摄</h3><p>边提词边录像，1080p 无水印，自动保存到相册，录制中跟读照常工作。</p></div>
+    <div class="card"><h3><span>🎮</span>蓝牙与双机遥控</h3><p>翻页器、蓝牙键盘即连即用；另一台 iPhone / iPad 秒变遥控台，还能远程编辑台词。</p></div>
+    <div class="card"><h3><span>📄</span>文档导入</h3><p>支持 docx、doc、md、txt、rtf、pdf，复杂排版可挑选段落导入。</p></div>
+    <div class="card"><h3><span>🎁</span>完全免费</h3><p>稿件无限、字数无限、功能永久免费，没有任何付费墙。</p></div>
   </div>
 
-  <div class="free">
+  <div class="free l-en">
+    <strong>Why free?</strong>
+    <p>Core teleprompter features shouldn't cost a yearly subscription. Murmur unlocks everything other apps keep behind paywalls — and all your data stays on your device.</p>
+  </div>
+  <div class="free l-zh">
     <strong>为什么免费？</strong>
     <p>提词器的核心功能本不该按年收费。念念把别家锁在会员里的功能全部免费开放，数据全部留在你的设备上。</p>
   </div>
 
   <footer>
-    <div>
-      <a href="./support/">技术支持 Support</a> ·
-      <a href="./privacy/">隐私政策 Privacy</a> ·
+    <div class="l-en">
+      <a href="./support/">Support</a> ·
+      <a href="./privacy/">Privacy</a> ·
+      <a href="https://whereabouts.top">whereabouts.top</a>
+    </div>
+    <div class="l-zh">
+      <a href="./support/">技术支持</a> ·
+      <a href="./privacy/">隐私政策</a> ·
       <a href="https://whereabouts.top">whereabouts.top</a>
     </div>
     <div style="margin-top:8px">© 2026 Chengzhu Zhao · <a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a></div>

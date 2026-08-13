@@ -1,21 +1,51 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>念念 Murmur — 技术支持</title>
-<meta name="description" content="念念（Murmur）提词器技术支持：常见问题与联系方式。Murmur teleprompter support.">
+<title>Murmur 念念 — Support</title>
+<meta name="description" content="Murmur (念念) teleprompter support: FAQ and contact. 念念提词器技术支持：常见问题与联系方式。">
+<script>
+(function () {
+  var lang = null;
+  try { lang = localStorage.getItem('murmur-lang'); } catch (e) {}
+  if (lang !== 'en' && lang !== 'zh') {
+    var nav = (navigator.language || '').toLowerCase();
+    lang = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+})();
+function setLang(l) {
+  document.documentElement.setAttribute('data-lang', l);
+  document.documentElement.lang = l === 'zh' ? 'zh-Hans' : 'en';
+  try { localStorage.setItem('murmur-lang', l); } catch (e) {}
+}
+</script>
 <style>
   :root {
     --bg: #0B0E13; --surface: #141923; --line: #232B38;
     --text: #E9EDF3; --muted: #8E99A8; --amber: #FFC53D;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html[data-lang="en"] .l-zh { display: none !important; }
+  html[data-lang="zh"] .l-en { display: none !important; }
   body {
     background: var(--bg); color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     line-height: 1.75;
   }
+  .langswitch {
+    position: fixed; top: 14px; right: 14px; z-index: 10; display: flex;
+    background: rgba(20,25,35,.85); border: 1px solid var(--line); border-radius: 999px;
+    overflow: hidden; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .langswitch button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 15px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  html[data-lang="en"] .langswitch [data-set="en"],
+  html[data-lang="zh"] .langswitch [data-set="zh"] { background: var(--amber); color: #111; }
   .wrap { max-width: 780px; margin: 0 auto; padding: 48px 22px 60px; }
   .back { color: var(--amber); text-decoration: none; font-size: 14px; }
   h1 { font-size: 32px; margin: 14px 0 6px; }
@@ -34,68 +64,100 @@
   }
   summary { cursor: pointer; font-weight: 650; font-size: 15.5px; }
   details p { color: var(--muted); font-size: 14.5px; margin-top: 10px; }
+  details a { color: var(--amber); }
   footer { margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; text-align: center; }
   footer a { color: var(--amber); text-decoration: none; margin: 0 8px; }
 </style>
 </head>
 <body>
+<div class="langswitch" role="group" aria-label="Language">
+  <button data-set="en" onclick="setLang('en')">EN</button>
+  <button data-set="zh" onclick="setLang('zh')">中文</button>
+</div>
+
 <div class="wrap">
-  <a class="back" href="../">← 念念 Murmur</a>
-  <h1>技术支持</h1>
-  <div class="sub">Murmur Support — 遇到问题？先看常见问题，解决不了就写邮件，我们会尽快回复。</div>
+  <a class="back l-en" href="../">← Murmur</a>
+  <a class="back l-zh" href="../">← 念念 Murmur</a>
+  <h1 class="l-en">Support</h1>
+  <h1 class="l-zh">技术支持</h1>
+  <div class="sub l-en">Having trouble? Check the FAQ below — if that doesn't solve it, email us and we'll get back to you.</div>
+  <div class="sub l-zh">遇到问题？先看常见问题，解决不了就写邮件，我们会尽快回复。</div>
 
   <div class="contact">
-    <strong>联系我们 Contact</strong><br>
-    📮 <a href="mailto:pluginexpert2@gmail.com?subject=念念 Murmur 反馈">pluginexpert2@gmail.com</a>
-    <p>请附上设备型号、系统版本和问题截图，通常 1–2 个工作日内回复。<br>
-    Please include your device model, iOS version and a screenshot. We usually reply within 1–2 business days.</p>
+    <strong class="l-en">Contact</strong><strong class="l-zh">联系我们</strong><br>
+    📮 <a href="mailto:pluginexpert2@gmail.com?subject=Murmur feedback">pluginexpert2@gmail.com</a>
+    <p class="l-en">Please include your device model, iOS version and a screenshot. We usually reply within 1–2 business days.</p>
+    <p class="l-zh">请附上设备型号、系统版本和问题截图，通常 1–2 个工作日内回复。</p>
   </div>
 
-  <h2>常见问题</h2>
+  <h2 class="l-en">FAQ</h2>
+  <h2 class="l-zh">常见问题</h2>
 
-  <details open>
-    <summary>智能模式（语音跟读）没有反应？</summary>
-    <p>1) 确认已允许「麦克风」和「语音识别」权限：系统设置 → 念念；2) 检查识别语言：提词界面顶部语言按钮可切换 自动/中文/English，台词是中文就选中文；3) 智能模式点播放后会先「聆听」，开始朗读台词后提词器才会跟着滚动；4) 首次使用某语言时系统可能需要下载离线识别资源，稍等片刻或连一次网。</p>
-  </details>
+  <!-- EN FAQ -->
+  <div class="l-en">
+    <details open>
+      <summary>Voice tracking (Smart Mode) isn't responding?</summary>
+      <p>1) Make sure Microphone and Speech Recognition are allowed: Settings → Murmur. 2) Check the recognition language — tap the language button at the top of the prompter and match it to your script (Auto / Chinese / English). 3) After pressing play, Smart Mode listens first; the prompter starts moving once you begin reading the script aloud. 4) The first time you use a language, iOS may need to download on-device speech assets — give it a moment or connect to the internet once.</p>
+    </details>
+    <details>
+      <summary>Device remote can't find the other device?</summary>
+      <p>1) Open Murmur on both devices (any screen is fine). 2) Turn on Wi-Fi or Bluetooth on both — the same Wi-Fi network connects fastest. 3) Allow the Local Network permission when prompted (or enable it later in Settings → Murmur → Local Network). 4) On the device being controlled, make sure Settings → Remote Control → "Allow Device Remote" is on. 5) Pure Bluetooth peer-to-peer connections are negotiated by iOS and can take ten-plus seconds the first time — give it a moment.</p>
+    </details>
+    <details>
+      <summary>How do Bluetooth page turners / clicker rings work? Key map?</summary>
+      <p>Pair the remote in the system Bluetooth settings first (most page turners act as Bluetooth keyboards), then just open the prompter: Space/Enter = play &amp; pause; ↑↓ = speed up / down; ←→ or PgUp/PgDn = jump back / forward; Home/R = back to top; M = mirror; Esc/Tab/H = show or hide controls. For volume-button selfie clickers, enable "Volume Button Remote" in Settings → Remote Control.</p>
+    </details>
+    <details>
+      <summary>Which import formats are supported? Import looks garbled?</summary>
+      <p>docx, doc, md, txt, rtf, pdf and html. Plain-text files auto-detect Chinese encodings such as GBK/Big5. Legacy binary .doc extraction is best-effort — if the result looks wrong, re-save the file as .docx or .txt in Word/WPS and import again. The import screen lets you tick exactly the paragraphs you want.</p>
+    </details>
+    <details>
+      <summary>Where are my recordings? No sound or no picture?</summary>
+      <p>Videos are saved to your system photo library (allow the "Add to Photos" permission the first time). No picture → check the Camera permission; no sound → check the Microphone permission and make sure no mute switch or Focus mode is blocking input.</p>
+    </details>
+    <details>
+      <summary>Where is my script data stored? Is anything uploaded?</summary>
+      <p>Everything stays in your device's local storage and is never uploaded to any server. Murmur has no accounts, no analytics and no ad SDKs. Deleting the app deletes your local scripts, so export backups via the share button first. See the <a href="../privacy/">Privacy Policy</a>.</p>
+    </details>
+  </div>
 
-  <details>
-    <summary>双机遥控找不到对方设备？</summary>
-    <p>1) 两台设备都要打开念念 App（停在任意页面即可）；2) 两台都开启 Wi-Fi 或蓝牙，连接同一 Wi-Fi 时最快；3) 首次使用请在弹窗中允许「本地网络」权限（漏点了可去 系统设置 → 念念 → 本地网络 打开）；4) 被控设备请确认 设置 → 遥控 →「允许被其他设备遥控」处于开启状态；5) 纯蓝牙直连由系统协商，首次连接可能需要十几秒，请稍候。</p>
-  </details>
-
-  <details>
-    <summary>蓝牙翻页器 / 遥控指环怎么用？按键对照？</summary>
-    <p>先在系统蓝牙设置里配对（多数翻页器以蓝牙键盘方式工作），然后直接进入提词界面即可：空格/回车 = 播放暂停；↑↓ = 加减速；←→ 或 PgUp/PgDn = 快退快进；Home/R = 回到开头；M = 镜像；Esc/Tab/H = 显隐控制栏。音量键式自拍遥控器请在 设置 → 遥控 打开「音量键遥控」。</p>
-  </details>
-
-  <details>
-    <summary>文档导入支持哪些格式？导入乱码？</summary>
-    <p>支持 docx、doc、md、txt、rtf、pdf、html。txt 会自动识别 GBK/Big5 等中文编码；老版二进制 .doc 为尽力提取，若结果不理想，请在 Word/WPS 里另存为 .docx 或 .txt 再导入。导入页面可逐段勾选，只导入需要的部分。</p>
-  </details>
-
-  <details>
-    <summary>录好的视频在哪里？为什么没有声音/画面？</summary>
-    <p>视频自动保存到系统相册（首次需允许「添加到相册」权限）。没有画面请检查「相机」权限；没有声音请检查「麦克风」权限，并确认没有用静音键/专注模式屏蔽输入设备。</p>
-  </details>
-
-  <details>
-    <summary>我的稿件数据存在哪里？会上传吗？</summary>
-    <p>全部保存在你的设备本地，不会上传到任何服务器。念念没有账号系统、没有统计分析、没有广告 SDK。卸载 App 会删除本地稿件，请提前用分享功能导出备份。详见<a href="../privacy/" style="color:var(--amber)">隐私政策</a>。</p>
-  </details>
-
-  <h2>English</h2>
-  <details>
-    <summary>Quick help in English</summary>
-    <p><b>Voice tracking not working?</b> Allow Microphone &amp; Speech Recognition in Settings → Murmur, match the recognition language to your script, then start reading aloud after pressing play.<br>
-    <b>Device remote can't find the other device?</b> Open Murmur on both devices, enable Wi-Fi or Bluetooth (same Wi-Fi is fastest), allow Local Network permission, and keep "Allow Device Remote" on in Settings → Remote Control.<br>
-    <b>Import garbled?</b> Legacy .doc extraction is best-effort — re-save as .docx or .txt.<br>
-    <b>Data:</b> everything stays on your device; nothing is uploaded. Contact: <a href="mailto:pluginexpert2@gmail.com" style="color:var(--amber)">pluginexpert2@gmail.com</a></p>
-  </details>
+  <!-- ZH FAQ -->
+  <div class="l-zh">
+    <details open>
+      <summary>智能模式（语音跟读）没有反应？</summary>
+      <p>1) 确认已允许「麦克风」和「语音识别」权限：系统设置 → 念念；2) 检查识别语言：提词界面顶部语言按钮可切换 自动/中文/English，台词是中文就选中文；3) 智能模式点播放后会先「聆听」，开始朗读台词后提词器才会跟着滚动；4) 首次使用某语言时系统可能需要下载离线识别资源，稍等片刻或连一次网。</p>
+    </details>
+    <details>
+      <summary>双机遥控找不到对方设备？</summary>
+      <p>1) 两台设备都要打开念念 App（停在任意页面即可）；2) 两台都开启 Wi-Fi 或蓝牙，连接同一 Wi-Fi 时最快；3) 首次使用请在弹窗中允许「本地网络」权限（漏点了可去 系统设置 → 念念 → 本地网络 打开）；4) 被控设备请确认 设置 → 遥控 →「允许被其他设备遥控」处于开启状态；5) 纯蓝牙直连由系统协商，首次连接可能需要十几秒，请稍候。</p>
+    </details>
+    <details>
+      <summary>蓝牙翻页器 / 遥控指环怎么用？按键对照？</summary>
+      <p>先在系统蓝牙设置里配对（多数翻页器以蓝牙键盘方式工作），然后直接进入提词界面即可：空格/回车 = 播放暂停；↑↓ = 加减速；←→ 或 PgUp/PgDn = 快退快进；Home/R = 回到开头；M = 镜像；Esc/Tab/H = 显隐控制栏。音量键式自拍遥控器请在 设置 → 遥控 打开「音量键遥控」。</p>
+    </details>
+    <details>
+      <summary>文档导入支持哪些格式？导入乱码？</summary>
+      <p>支持 docx、doc、md、txt、rtf、pdf、html。txt 会自动识别 GBK/Big5 等中文编码；老版二进制 .doc 为尽力提取，若结果不理想，请在 Word/WPS 里另存为 .docx 或 .txt 再导入。导入页面可逐段勾选，只导入需要的部分。</p>
+    </details>
+    <details>
+      <summary>录好的视频在哪里？为什么没有声音/画面？</summary>
+      <p>视频自动保存到系统相册（首次需允许「添加到相册」权限）。没有画面请检查「相机」权限；没有声音请检查「麦克风」权限，并确认没有用静音键/专注模式屏蔽输入设备。</p>
+    </details>
+    <details>
+      <summary>我的稿件数据存在哪里？会上传吗？</summary>
+      <p>全部保存在你的设备本地，不会上传到任何服务器。念念没有账号系统、没有统计分析、没有广告 SDK。卸载 App 会删除本地稿件，请提前用分享功能导出备份。详见<a href="../privacy/">隐私政策</a>。</p>
+    </details>
+  </div>
 
   <footer>
-    <div>
+    <div class="l-en">
+      <a href="../">Murmur</a> ·
+      <a href="../privacy/">Privacy</a> ·
+      <a href="https://whereabouts.top">whereabouts.top</a>
+    </div>
+    <div class="l-zh">
       <a href="../">念念 Murmur</a> ·
-      <a href="../privacy/">隐私政策 Privacy</a> ·
+      <a href="../privacy/">隐私政策</a> ·
       <a href="https://whereabouts.top">whereabouts.top</a>
     </div>
     <div style="margin-top:8px">© 2026 Chengzhu Zhao</div>
