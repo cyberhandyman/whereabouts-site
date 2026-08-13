@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>念念 Murmur — 再也不忘词的免费提词器</title>
+<meta name="description" content="念念（Murmur）：最好用的 iPad/iPhone 免费提词器。中英文智能跟读、提词拍摄无水印、蓝牙与双机遥控、文档导入。无内购、无广告、无需注册。">
+<style>
+  :root {
+    --bg: #0B0E13; --surface: #141923; --line: #232B38;
+    --text: #E9EDF3; --muted: #8E99A8; --amber: #FFC53D; --green: #3ECF8E;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 56px 22px 60px; }
+  header { text-align: center; margin-bottom: 44px; }
+  .logo {
+    width: 88px; height: 88px; border-radius: 22px; margin: 0 auto 18px;
+    background: rgba(255,197,61,.15); display: flex; align-items: center; justify-content: center;
+  }
+  .logo svg { width: 48px; height: 48px; }
+  h1 { font-size: 46px; font-weight: 800; letter-spacing: .02em; }
+  h1 small { display: block; font-size: 19px; color: var(--amber); font-weight: 700; letter-spacing: .25em; margin-top: 2px; }
+  .tagline { font-size: 20px; font-weight: 600; margin-top: 14px; }
+  .tagline-en { color: var(--muted); font-size: 15px; margin-top: 4px; }
+  .badges { margin-top: 16px; color: var(--amber); font-size: 14.5px; font-weight: 600; letter-spacing: .05em; }
+  .cta { margin-top: 22px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta a {
+    display: inline-block; padding: 11px 22px; border-radius: 12px; text-decoration: none;
+    font-weight: 700; font-size: 15px;
+  }
+  .cta .primary { background: var(--amber); color: #111; }
+  .cta .secondary { border: 1px solid var(--line); color: var(--text); }
+  .shots { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 46px 0; }
+  .shots figure { flex: 1; min-width: 200px; max-width: 260px; }
+  .shots img { width: 100%; border-radius: 20px; border: 1px solid var(--line); display: block; }
+  .shots figcaption { text-align: center; color: var(--muted); font-size: 13px; margin-top: 8px; }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; margin-top: 10px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .card h3 { font-size: 17px; margin-bottom: 6px; }
+  .card h3 span { color: var(--amber); margin-right: 8px; }
+  .card p { color: var(--muted); font-size: 14.5px; }
+  .card .en { display: block; margin-top: 6px; font-size: 13px; opacity: .75; }
+  .free {
+    margin: 44px 0 0; text-align: center; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 16px; padding: 26px 20px;
+  }
+  .free strong { color: var(--amber); font-size: 20px; }
+  .free p { color: var(--muted); font-size: 14.5px; margin-top: 6px; }
+  footer {
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 13.5px; text-align: center;
+  }
+  footer a { color: var(--amber); text-decoration: none; margin: 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">
+      <svg viewBox="0 0 48 48" fill="none">
+        <rect x="10" y="12" width="30" height="4.6" rx="2.3" fill="#E7ECF4"/>
+        <path d="M2 21.7 L9 25.3 L2 28.9 Z" fill="#FFC53D"/>
+        <rect x="10" y="23" width="26" height="4.6" rx="2.3" fill="#FFC53D"/>
+        <rect x="10" y="34" width="22" height="4.6" rx="2.3" fill="#E7ECF4"/>
+      </svg>
+    </div>
+    <h1>念念<small>MURMUR</small></h1>
+    <div class="tagline">再也不忘词 —— 最好用的 iPad / iPhone 免费提词器</div>
+    <div class="tagline-en">Never forget your lines — the best free teleprompter for iPad &amp; iPhone</div>
+    <div class="badges">无内购 · 无水印 · 无广告 · 无需注册</div>
+    <div class="cta">
+      <a class="primary" href="https://apps.apple.com/app/id0000000000">App Store 下载（上架审核中）</a>
+      <a class="secondary" href="./support/">技术支持</a>
+      <a class="secondary" href="./privacy/">隐私政策</a>
+    </div>
+  </header>
+
+  <div class="shots">
+    <figure><img src="img/intro.jpg" alt="念念功能介绍页"><figcaption>完全免费的全功能提词器</figcaption></figure>
+    <figure><img src="img/prompter.jpg" alt="提词界面"><figcaption>专业提词 · 阅读参考线 · 全参数可调</figcaption></figure>
+    <figure><img src="img/remote.jpg" alt="双机遥控界面"><figcaption>iPhone 遥控 iPad · 实时同步</figcaption></figure>
+  </div>
+
+  <div class="features">
+    <div class="card"><h3><span>🎤</span>智能跟读</h3><p>说到哪滚到哪：识别普通话或英文，停顿即停、跳读自动追上，完全离线。<span class="en">Voice tracking follows your Chinese or English speech, fully on-device.</span></p></div>
+    <div class="card"><h3><span>🎛️</span>随心调节</h3><p>字号、字重、字宽、行距、页面宽度、滚动速度，全都可调。<span class="en">Font size, weight, width, line spacing, page width and speed.</span></p></div>
+    <div class="card"><h3><span>🪞</span>镜像模式</h3><p>水平 / 垂直镜像，适配分光镜提词器硬件。<span class="en">Horizontal and vertical mirroring for beam splitter rigs.</span></p></div>
+    <div class="card"><h3><span>🎥</span>提词拍摄</h3><p>边提词边录像，1080p 无水印，自动保存到相册，录制中跟读照常工作。<span class="en">Record while prompting, no watermark, saved to Photos.</span></p></div>
+    <div class="card"><h3><span>🎮</span>蓝牙与双机遥控</h3><p>翻页器、蓝牙键盘即连即用；另一台 iPhone / iPad 秒变遥控台，还能远程编辑台词。<span class="en">Bluetooth remotes work instantly; control an iPad from your iPhone.</span></p></div>
+    <div class="card"><h3><span>📄</span>文档导入</h3><p>支持 docx、doc、md、txt、rtf、pdf，复杂排版可挑选段落导入。<span class="en">Import docx, doc, md, txt, rtf and pdf — pick the parts you need.</span></p></div>
+    <div class="card"><h3><span>🎁</span>完全免费</h3><p>稿件无限、字数无限、功能永久免费，没有任何付费墙。<span class="en">Every feature is free forever. No paywalls, period.</span></p></div>
+  </div>
+
+  <div class="free">
+    <strong>为什么免费？</strong>
+    <p>提词器的核心功能本不该按年收费。念念把别家锁在会员里的功能全部免费开放，数据全部留在你的设备上。</p>
+  </div>
+
+  <footer>
+    <div>
+      <a href="./support/">技术支持 Support</a> ·
+      <a href="./privacy/">隐私政策 Privacy</a> ·
+      <a href="https://whereabouts.top">whereabouts.top</a>
+    </div>
+    <div style="margin-top:8px">© 2026 Chengzhu Zhao · <a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a></div>
+  </footer>
+</div>
+</body>
+</html>
