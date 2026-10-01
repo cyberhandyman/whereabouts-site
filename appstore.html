@@ -166,7 +166,7 @@
       <p>工程里已备好 <code>Whereabouts/Whereabouts-AppStore.entitlements</code>(沙箱 + 网络 + 用户选择文件读写)。<b>App Store 版必须开沙箱</b>。在 project.yml 的 Whereabouts target settings 里加一行再重新生成:</p>
       <pre>CODE_SIGN_ENTITLEMENTS: Whereabouts/Whereabouts-AppStore.entitlements</pre>
       <div class="note warn">⚠️ 开沙箱后 app 的数据目录会变(搬进 ~/Library/Containers)。你自己 Mac 上的旧数据不会自动迁移 —— 上架前记得先在旧版里「设置 → 数据 → 导出 JSON」,装了沙箱版后再导入。新用户无感。</div>
-      <div class="note warn">⚠️ 另一个上架前建议:目前 API key 明文存在偏好设置里(开发期为了 ad-hoc 签名不弹钥匙串框的取舍)。正式签名稳定后建议把 <code>AI/Keychain.swift</code> 换回真 Keychain 实现(Security 框架),几十行的事,不做也能过审(隐私政策里已如实说明)。</div>
+      <div class="note ok">✅ API key 已改存系统钥匙串(<code>AI/Keychain.swift</code>,Security 框架),隐私政策与 app 内文案已同步为 Keychain 口径。</div>
     </li>
   </ol>
 

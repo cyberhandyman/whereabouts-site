@@ -153,7 +153,7 @@
             <td class="zh">完整菜单:置顶 / 编辑 / 借给… / 用 AI 理解 / 删除</td>
             <td class="en">Full menu: pin / edit / lend / AI / delete</td></tr>
         <tr><td><span class="gesture zh">下拉</span><span class="gesture en">Pull down</span></td>
-            <td class="zh">从 iCloud 手动同步(见 ⑤)</td><td class="en">Manual iCloud sync (see ⑤)</td></tr>
+            <td class="zh">立即与 iCloud 同步(见 ⑤)</td><td class="en">Sync with iCloud now (see ⑤)</td></tr>
         <tr><td><span class="gesture zh">选择</span><span class="gesture en">Select</span></td>
             <td class="zh">左上角「选择」进多选,底部批量删除</td><td class="en">Tap Select for multi-select and batch delete</td></tr>
       </tbody>
@@ -205,12 +205,14 @@
     <p class="sectionsub en">Sign in with the same Apple Account on both devices — zero config.</p>
     <div class="card">
       <ul>
-        <li class="zh"><b>实时同步</b>:开关默认打开(设置 → iCloud 同步),改动自动在设备间流动,通常几秒到一分钟。</li>
-        <li class="en"><b>Live sync</b> is on by default (Settings → iCloud Sync); changes flow across devices within seconds to a minute.</li>
-        <li class="zh"><b>手动同步</b>:iOS 首页<b>下拉刷新</b>或点右上角 ☁️;设置 → 数据里也有「立即同步」。它会拉取其它设备写到 iCloud 云盘的数据文件、<b>合并去重</b>(同名同位置只留一条),再把本机最新数据写回去。</li>
-        <li class="en"><b>Manual sync</b>: pull-to-refresh or tap ☁️ on iOS Home (also "Sync Now" in Settings → Data). It pulls the data file other devices wrote to iCloud Drive, <b>merges with de-duplication</b>, and writes back.</li>
-        <li class="zh"><b>看得见的备份</b>:数据文件就在 iCloud 云盘/<code>Whereabouts</code>/ 里(「文件」app / 访达可见),退出 app 时自动更新。</li>
-        <li class="en"><b>A visible backup</b>: the file lives in iCloud Drive/<code>Whereabouts</code>/ (visible in Files / Finder), refreshed on quit.</li>
+        <li class="zh"><b>实时同步</b>:开关默认打开(设置 → iCloud 同步),改动自动在设备间流动,通常几秒到一两分钟;切回 app 时会立刻拉取另一台设备的改动。</li>
+        <li class="en"><b>Live sync</b> is on by default (Settings → iCloud Sync); changes flow across devices within seconds to a minute or two, and switching back to the app pulls the latest changes right away.</li>
+        <li class="zh"><b>立即同步 + 状态</b>:iOS 首页<b>下拉刷新</b>或点右上角 ☁️,或在设置 → iCloud 同步里点「立即同步」:本机改动马上上传,并显示「上次收到改动 / 上次上传改动」的时间,出问题会直接告诉你原因(比如没登录 iCloud、储存空间满了)。</li>
+        <li class="en"><b>Sync now + status</b>: pull to refresh or tap ☁️ on iOS Home, or tap "Sync Now" in Settings → iCloud Sync. Your changes upload right away, and you'll see when changes were last received and sent — plus a plain-language reason if something's wrong (e.g. not signed in, storage full).</li>
+        <li class="zh"><b>确认是同一个账号</b>:设置 → iCloud 同步 会显示当前 iCloud 账号状态和一串<b>「账号识别码」</b>。苹果不允许 app 读取 Apple ID 邮箱,所以用它来对照 —— Mac 和 iPhone 上这串码一样,就是同一个 iCloud 账号。</li>
+        <li class="en"><b>Same account?</b> Settings → iCloud Sync shows your iCloud account status and an <b>Account ID</b> code. Apple doesn't let apps read your Apple ID email, so compare this code instead — if it matches on your Mac and iPhone, they're on the same iCloud account.</li>
+        <li class="zh"><b>看得见的备份</b>:每台设备会把全部物品存一份 JSON 到 iCloud 云盘/<code>Whereabouts</code>/(「文件」app / 访达可见,文件名带设备类型),退出 / 切到后台时自动更新。它只是保险备份、不参与同步;需要恢复时用 设置 → 数据 →「导入」选择该文件。</li>
+        <li class="en"><b>A visible backup</b>: each device saves a JSON copy of everything to iCloud Drive/<code>Whereabouts</code>/ (visible in Files / Finder; the file name includes the device type), refreshed when you quit or leave the app. It's only a safety backup and doesn't take part in syncing — to restore, use Settings → Data → Import and pick that file.</li>
       </ul>
     </div>
     <div class="note ok zh">🔒 全部走你自己 Apple 账户的私有空间,开发者永远看不到任何内容。不登录 iCloud 也能用 —— app 自动落回纯本机模式。</div>
