@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Face2Face Live Translator — 面面翻译器</title>
+<meta name="description" content="Talk face to face in any language. Free, offline, on-device conversation translator with iPhone Duo outer-display support. 面对面实时翻译，免费、离线、全部在设备上处理。">
+<script>
+(function () {
+  var lang = null;
+  try { lang = localStorage.getItem('face2face-lang'); } catch (e) {}
+  if (lang !== 'en' && lang !== 'zh') {
+    var nav = (navigator.language || '').toLowerCase();
+    lang = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+})();
+function setLang(l) {
+  document.documentElement.setAttribute('data-lang', l);
+  document.documentElement.lang = l === 'zh' ? 'zh-Hans' : 'en';
+  try { localStorage.setItem('face2face-lang', l); } catch (e) {}
+}
+</script>
+<style>
+  :root {
+    --bg: #0B0E14; --surface: #141923; --line: #232B38;
+    --text: #E9EDF3; --muted: #8E99A8; --me: #4C9BFF; --them: #F29A57;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html[data-lang="en"] .l-zh { display: none !important; }
+  html[data-lang="zh"] .l-en { display: none !important; }
+  body {
+    background: radial-gradient(120% 60% at 15% 0%, rgba(242,154,87,.16), transparent 60%),
+                radial-gradient(120% 60% at 85% 100%, rgba(76,155,255,.18), transparent 60%), var(--bg);
+    min-height: 100vh; color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+  }
+  .langswitch {
+    position: fixed; top: 14px; right: 14px; z-index: 10; display: flex;
+    background: rgba(20,25,35,.7); border: 1px solid var(--line); border-radius: 999px;
+    overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .langswitch button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 15px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  html[data-lang="en"] .langswitch [data-set="en"],
+  html[data-lang="zh"] .langswitch [data-set="zh"] { background: var(--me); color: #fff; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 48px 22px 60px; }
+  .back { color: var(--me); text-decoration: none; font-size: 14px; }
+  h1 { font-size: 32px; margin: 14px 0 4px; line-height: 1.3; }
+  .date { color: var(--muted); font-size: 13.5px; margin-bottom: 26px; }
+  .headline {
+    background: rgba(255,255,255,.05); border: 1px solid var(--line); border-left: 4px solid var(--me);
+    border-radius: 14px; padding: 16px 20px; margin-bottom: 30px; font-weight: 650;
+  }
+  h2 { font-size: 20px; margin: 30px 0 10px; color: var(--me); }
+  h3 { font-size: 16.5px; margin: 22px 0 6px; color: var(--text); }
+  p, li { color: var(--muted); font-size: 15px; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  b { color: var(--text); }
+  a { color: var(--me); }
+  footer { margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; text-align: center; }
+  footer a { text-decoration: none; margin: 0 8px; }
+  
+  .hero { text-align: center; padding-top: 30px; }
+  .hero img { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 20px 50px -18px rgba(76,155,255,.55); }
+  .hero h1 { font-size: 38px; margin-top: 22px; }
+  .tag { font-size: 19px; color: var(--text); margin-top: 6px; }
+  .sub { color: var(--muted); margin-top: 8px; }
+  .badge { display: inline-block; margin-top: 24px; padding: 12px 24px; border-radius: 999px; font-weight: 700;
+           background: rgba(255,255,255,.08); border: 1px solid var(--line); color: var(--text); text-decoration: none; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 40px; }
+  .card { background: rgba(255,255,255,.045); border: 1px solid var(--line); border-radius: 18px; padding: 18px 18px 16px; }
+  .card h3 { margin: 0 0 6px; font-size: 16.5px; }
+  .card p { font-size: 14.5px; }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; vertical-align: 1px; }
+
+</style>
+</head>
+<body>
+<div class="langswitch" role="group" aria-label="Language">
+  <button data-set="en" onclick="setLang('en')">EN</button>
+  <button data-set="zh" onclick="setLang('zh')">中文</button>
+</div>
+<div class="wrap">
+
+  <div class="hero">
+    <img src="img/icon.png" alt="Face2Face icon">
+    <h1 class="l-en">Face2Face Live Translator</h1>
+    <h1 class="l-zh">面面翻译器</h1>
+    <div class="tag l-en">Talk face to face, in any language.</div>
+    <div class="tag l-zh">面对面，说什么语言都行。</div>
+    <div class="sub l-en">Each of you speaks your own language and reads the other in yours — on-device, offline, no account, no ads.</div>
+    <div class="sub l-zh">你们各说各的语言，各自看到翻成自己语言的字幕。全部在设备上处理，可离线，无需账号，没有广告。</div>
+    <a class="badge l-en" href="support/">Coming soon to the App Store</a>
+    <a class="badge l-zh" href="support/">即将上架 App Store</a>
+  </div>
+
+  <div class="grid l-en">
+    <div class="card"><h3><span class="dot" style="background:var(--them)"></span>Face to face</h3><p>The top half turns to the other person. Each side has its own language and microphone.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--me)"></span>Hands-free turns</h3><p>Tap Auto and the phone switches sides when someone pauses. Live words, then the final translation.</p></div>
+    <div class="card"><h3>iPhone Duo</h3><p>You read the inner display, they read and tap the outer one — in their language.</p></div>
+    <div class="card"><h3>Works offline</h3><p>Apple's on-device speech and translation models. Download once, use in Airplane Mode.</p></div>
+    <div class="card"><h3>Big captions</h3><p>Huge, high-contrast captions for anyone hard of hearing — pinch to resize, type to speak.</p></div>
+    <div class="card"><h3>Private by design</h3><p>No servers, no accounts, no tracking. History stays on your device.</p></div>
+  </div>
+  <div class="grid l-zh">
+    <div class="card"><h3><span class="dot" style="background:var(--them)"></span>面对面</h3><p>上半屏转向对方，两边各有自己的语言和麦克风。</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--me)"></span>自动轮流</h3><p>点“自动”，有人停顿时手机自动换到另一边。边说边出字，说完给出最终译文。</p></div>
+    <div class="card"><h3>iPhone Duo</h3><p>你看内屏，对方看外屏、点外屏，全是对方自己的语言。</p></div>
+    <div class="card"><h3>离线可用</h3><p>使用 Apple 的设备端识别和翻译模型，下载一次，开飞行模式也能用。</p></div>
+    <div class="card"><h3>大字字幕</h3><p>给听力不好的长辈用的高对比度大字字幕，双指缩放，打字朗读。</p></div>
+    <div class="card"><h3>隐私优先</h3><p>没有服务器、没有账号、不追踪。对话记录只存在你的设备上。</p></div>
+  </div>
+  <footer>
+    <div class="l-en"><a href="./">Face2Face</a> · <a href="./support/">Support</a> · <a href="./privacy/">Privacy</a> · <a href="https://whereabouts.top">whereabouts.top</a></div>
+    <div class="l-zh"><a href="./">面面翻译器</a> · <a href="./support/">技术支持</a> · <a href="./privacy/">隐私政策</a> · <a href="https://whereabouts.top">whereabouts.top</a></div>
+    <div style="margin-top:8px">© 2026 Chengzhu Zhao</div>
+  </footer>
+</div>
+</body>
+</html>

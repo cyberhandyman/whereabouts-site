@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Face2Face 面面翻译器 — Support</title>
+<meta name="description" content="Help for Face2Face Live Translator. 面面翻译器使用帮助。">
+<script>
+(function () {
+  var lang = null;
+  try { lang = localStorage.getItem('face2face-lang'); } catch (e) {}
+  if (lang !== 'en' && lang !== 'zh') {
+    var nav = (navigator.language || '').toLowerCase();
+    lang = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+})();
+function setLang(l) {
+  document.documentElement.setAttribute('data-lang', l);
+  document.documentElement.lang = l === 'zh' ? 'zh-Hans' : 'en';
+  try { localStorage.setItem('face2face-lang', l); } catch (e) {}
+}
+</script>
+<style>
+  :root {
+    --bg: #0B0E14; --surface: #141923; --line: #232B38;
+    --text: #E9EDF3; --muted: #8E99A8; --me: #4C9BFF; --them: #F29A57;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html[data-lang="en"] .l-zh { display: none !important; }
+  html[data-lang="zh"] .l-en { display: none !important; }
+  body {
+    background: radial-gradient(120% 60% at 15% 0%, rgba(242,154,87,.16), transparent 60%),
+                radial-gradient(120% 60% at 85% 100%, rgba(76,155,255,.18), transparent 60%), var(--bg);
+    min-height: 100vh; color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+  }
+  .langswitch {
+    position: fixed; top: 14px; right: 14px; z-index: 10; display: flex;
+    background: rgba(20,25,35,.7); border: 1px solid var(--line); border-radius: 999px;
+    overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .langswitch button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 15px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  html[data-lang="en"] .langswitch [data-set="en"],
+  html[data-lang="zh"] .langswitch [data-set="zh"] { background: var(--me); color: #fff; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 48px 22px 60px; }
+  .back { color: var(--me); text-decoration: none; font-size: 14px; }
+  h1 { font-size: 32px; margin: 14px 0 4px; line-height: 1.3; }
+  .date { color: var(--muted); font-size: 13.5px; margin-bottom: 26px; }
+  .headline {
+    background: rgba(255,255,255,.05); border: 1px solid var(--line); border-left: 4px solid var(--me);
+    border-radius: 14px; padding: 16px 20px; margin-bottom: 30px; font-weight: 650;
+  }
+  h2 { font-size: 20px; margin: 30px 0 10px; color: var(--me); }
+  h3 { font-size: 16.5px; margin: 22px 0 6px; color: var(--text); }
+  p, li { color: var(--muted); font-size: 15px; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  b { color: var(--text); }
+  a { color: var(--me); }
+  footer { margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; text-align: center; }
+  footer a { text-decoration: none; margin: 0 8px; }
+  
+</style>
+</head>
+<body>
+<div class="langswitch" role="group" aria-label="Language">
+  <button data-set="en" onclick="setLang('en')">EN</button>
+  <button data-set="zh" onclick="setLang('zh')">中文</button>
+</div>
+<div class="wrap">
+
+  <a class="back l-en" href="../">← Face2Face</a>
+  <a class="back l-zh" href="../">← 面面翻译器</a>
+  <h1 class="l-en">Support</h1>
+  <h1 class="l-zh">技术支持</h1>
+  <div class="date l-en">Questions or feedback: <a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a></div>
+  <div class="date l-zh">问题与反馈：<a href="mailto:pluginexpert2@gmail.com">pluginexpert2@gmail.com</a></div>
+
+  <div class="l-en">
+    <h2>Getting started</h2>
+    <ul>
+      <li>Put the phone between you. The top half is turned to face the other person.</li>
+      <li>Tap a language name to choose it — each person picks their own.</li>
+      <li>Whoever is talking taps the microphone on their side; tap it again to stop. Once it's on, tap <b>Auto</b> and the phone switches sides by itself when someone pauses.</li>
+      <li>Tap any sentence to hear it read aloud. Tap your own sentence to fix a word the phone misheard.</li>
+    </ul>
+    <h2>Using it offline</h2>
+    <p>Open Settings → Offline Languages and download both languages before you travel. After that, everything works in Airplane Mode. Translation models are shared with Apple's Translate app.</p>
+    <h2>iPhone Duo</h2>
+    <p>Open the phone: you read the inner display and the other person reads the outer display, in their language — both of you can tap. iOS lets apps use the outer display only while the camera is on, so Face2Face turns the camera on just for that; nothing is shown, recorded or saved. If you prefer not to, turn off Settings → Use the Outer Display and the inner display shows both sides. Closed, the app works on the outer display like on any phone.</p>
+    <h2>Big captions</h2>
+    <p>Tap the captions button for large, high-contrast captions in one language — for someone hard of hearing, a noisy room or a mask. Pinch to resize, hold to pause, swipe up to clear, and tap the keyboard to type something to be read aloud.</p>
+    <h2>Languages</h2>
+    <p>Arabic, Chinese (Mandarin and Taiwan Mandarin), Cantonese, Dutch, English, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Ukrainian and Vietnamese, using Apple's on-device models. Cantonese is recognized natively and translated as Traditional Chinese, so some colloquial words may come out less accurately.</p>
+    <h2>It doesn't hear me</h2>
+    <ul>
+      <li>Check Settings → Face2Face: Microphone and Speech Recognition must be on.</li>
+      <li>Keep your fingers off the microphones and speak towards the phone.</li>
+      <li>If a language shows "Not available on this phone", your device has no on-device model for it — you can still type.</li>
+    </ul>
+  </div>
+
+  <div class="l-zh">
+    <h2>开始使用</h2>
+    <ul>
+      <li>把手机放在你们中间，上半屏会转向对方。</li>
+      <li>点语言名字选择语言，两个人各选各的。</li>
+      <li>谁说话，谁点自己那一边的麦克风；再点一下结束。麦克风打开后点<b>自动</b>，有人停顿时手机会自动换到另一边。</li>
+      <li>点任意一句可以朗读；点自己说的那句可以改掉听错的字。</li>
+    </ul>
+    <h2>离线使用</h2>
+    <p>出发前打开 设置 → 离线语言，把两种语言都下载好。之后开飞行模式也能用。翻译模型与系统“翻译”App 共用。</p>
+    <h2>iPhone Duo</h2>
+    <p>展开手机：你看内屏，对方看外屏上自己的语言，两边都能点。iOS 只允许 App 在相机开启时使用外屏，所以面面翻译器只为此打开相机，不显示、不录制、不保存任何画面。不想用的话，在 设置 → 使用外屏 关掉，内屏会同时显示两边。合上时，App 在外屏上像普通手机一样使用。</p>
+    <h2>大字字幕</h2>
+    <p>点字幕按钮，就能用一种语言显示高对比度的大字字幕，适合听力不好的长辈、嘈杂的环境或戴口罩的时候。双指缩放字号，按住暂停，上滑清屏，点键盘打字让手机读出来。</p>
+    <h2>支持的语言</h2>
+    <p>阿拉伯语、中文（普通话、台湾国语）、粤语、荷兰语、英语、法语、德语、印地语、印尼语、意大利语、日语、韩语、波兰语、葡萄牙语、俄语、西班牙语、泰语、土耳其语、乌克兰语、越南语，均使用 Apple 的设备端模型。粤语可以原生识别，翻译时按繁体中文处理，部分口语字可能翻得不够准确。</p>
+    <h2>听不到我说话？</h2>
+    <ul>
+      <li>检查 设置 → 面面翻译器：麦克风和语音识别都要打开。</li>
+      <li>手指别挡住麦克风，朝手机说话。</li>
+      <li>如果某种语言显示“这部手机暂不支持”，说明设备上没有这种语言的本机模型，仍然可以打字。</li>
+    </ul>
+  </div>
+  <footer>
+    <div class="l-en"><a href="../">Face2Face</a> · <a href="../support/">Support</a> · <a href="../privacy/">Privacy</a> · <a href="https://whereabouts.top">whereabouts.top</a></div>
+    <div class="l-zh"><a href="../">面面翻译器</a> · <a href="../support/">技术支持</a> · <a href="../privacy/">隐私政策</a> · <a href="https://whereabouts.top">whereabouts.top</a></div>
+    <div style="margin-top:8px">© 2026 Chengzhu Zhao</div>
+  </footer>
+</div>
+</body>
+</html>
