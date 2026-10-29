@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutti — Music notation for Mac</title>
+<meta name="description" content="Tutti: a free, Sibelius-style music notation app for Mac. Tutti 打谱：Mac 上免费的 Sibelius 风格打谱软件。">
+<script>
+(function () {
+  var lang = null;
+  try { lang = localStorage.getItem('tutti-lang'); } catch (e) {}
+  if (lang !== 'en' && lang !== 'zh') {
+    var nav = (navigator.language || '').toLowerCase();
+    lang = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+})();
+function setLang(l) {
+  document.documentElement.setAttribute('data-lang', l);
+  document.documentElement.lang = l === 'zh' ? 'zh-Hans' : 'en';
+  try { localStorage.setItem('tutti-lang', l); } catch (e) {}
+}
+</script>
+<style>
+  :root {
+    --bg: #0D0B14; --surface: #16131F; --line: #2A2438;
+    --text: #EDEAF3; --muted: #9A93A8; --accent: #8C7BFF; --warm: #F2B457;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html[data-lang="en"] .l-zh { display: none !important; }
+  html[data-lang="zh"] .l-en { display: none !important; }
+  body {
+    background: radial-gradient(120% 60% at 15% 0%, rgba(242,180,87,.14), transparent 60%),
+                radial-gradient(120% 60% at 85% 100%, rgba(140,123,255,.20), transparent 60%), var(--bg);
+    min-height: 100vh; color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+  }
+  .langswitch {
+    position: fixed; top: 14px; right: 14px; z-index: 10; display: flex;
+    background: rgba(22,19,31,.7); border: 1px solid var(--line); border-radius: 999px;
+    overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .langswitch button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 15px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  html[data-lang="en"] .langswitch [data-set="en"],
+  html[data-lang="zh"] .langswitch [data-set="zh"] { background: var(--accent); color: #fff; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 48px 22px 60px; }
+  .back { color: var(--accent); text-decoration: none; font-size: 14px; }
+  h1 { font-size: 32px; margin: 14px 0 4px; line-height: 1.3; }
+  .date, .sub { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
+  .headline {
+    background: rgba(255,255,255,.05); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 14px; padding: 16px 20px; margin-bottom: 30px; font-weight: 650;
+  }
+  h2 { font-size: 20px; margin: 30px 0 10px; color: var(--accent); }
+  h3 { font-size: 16.5px; margin: 22px 0 6px; color: var(--text); }
+  p, li { color: var(--muted); font-size: 15px; }
+  p + p { margin-top: 8px; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  b { color: var(--text); }
+  a { color: var(--accent); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin: 18px 0; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+  .card h3 { margin-top: 0; }
+  .card p { font-size: 14px; }
+  .cta { display: inline-block; margin: 18px 0 6px; padding: 10px 22px; border-radius: 999px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; color: var(--muted); }
+  td, th { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { color: var(--text); }
+  footer { margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; text-align: center; }
+  footer a { text-decoration: none; margin: 0 8px; }
+</style>
+</head>
+<body>
+<div class="langswitch" role="group" aria-label="Language">
+  <button data-set="en" onclick="setLang('en')">EN</button>
+  <button data-set="zh" onclick="setLang('zh')">中文</button>
+</div>
+<div class="wrap">
+
+  <div class="l-en">
+    <h1>Tutti</h1>
+    <div class="sub">Music notation for Mac, in the spirit of Sibelius. Free.</div>
+    <div class="headline">Write scores the way you are used to: a ribbon, a six-layout keypad, an inspector and a piano keyboard. Engraving by Verovio, playback of everything you write.</div>
+    <div class="grid">
+      <div class="card"><h3>Fast note input</h3><p>Keypad with Sibelius' six layouts, computer keyboard, MIDI keyboards and wind controllers, step-time and Flexi-time recording.</p></div>
+      <div class="card"><h3>1,164 markings</h3><p>Dynamics, tempo words, articulations, ornaments, lines, repeats, noteheads, microtones and contemporary techniques, searchable by name.</p></div>
+      <div class="card"><h3>Plays what you write</h3><p>cresc., rit., pizz., a tempo, trills, tremolos and repeat structures all sound. MuseScore General sounds, Audio Unit instruments or MIDI out.</p></div>
+      <div class="card"><h3>Engraving and layout</h3><p>Make bars tighter or looser, make into system or page, lock format, cover and title pages, program and performance notes, parts.</p></div>
+      <div class="card"><h3>627 instruments</h3><p>The MuseScore instrument library with Chinese instruments added; transposing instruments explained in plain words.</p></div>
+      <div class="card"><h3>Exchange</h3><p>MusicXML and MIDI in and out; export PDF, PNG and audio (WAV, AIFF, M4A) for the score and every part.</p></div>
+    </div>
+    <p>macOS 26 or later · English and Simplified Chinese · no account, no ads, no data collected.</p>
+  </div>
+  <div class="l-zh">
+    <h1>Tutti 打谱</h1>
+    <div class="sub">Mac 上的打谱软件，Sibelius 的用法，免费。</div>
+    <div class="headline">按你熟悉的方式写谱：选项卡、六种布局的小键盘、属性面板和钢琴键盘。Verovio 排版，写什么就能演奏什么。</div>
+    <div class="grid">
+      <div class="card"><h3>快速输入</h3><p>Sibelius 六种布局的小键盘、电脑键盘、MIDI 键盘和电吹管，逐音输入与实时录入（Flexi-time）。</p></div>
+      <div class="card"><h3>1164 种记号</h3><p>力度、速度术语、演奏法、装饰音、线条、反复、符头、微分音、现代技法，用中文、英文、意大利文或拼音都能搜到。</p></div>
+      <div class="card"><h3>写什么就演奏什么</h3><p>cresc.、rit.、pizz.、a tempo、颤音、震音、反复跳转都会体现在回放里。MuseScore General 音色、Audio Unit 乐器或 MIDI 输出。</p></div>
+      <div class="card"><h3>排版与版面</h3><p>逐小节排紧排松、合成一行或一页、锁定版面，封面、扉页、作品介绍与演出说明页，分谱。</p></div>
+      <div class="card"><h3>627 种乐器</h3><p>MuseScore 乐器库，全部有中文名，另含常用民族乐器；移调乐器用大白话讲清楚。</p></div>
+      <div class="card"><h3>交换与导出</h3><p>MusicXML、MIDI 导入导出；总谱和每份分谱都能导出 PDF、PNG 和音频（WAV、AIFF、M4A）。</p></div>
+    </div>
+    <p>需要 macOS 26 或更新版本 · 简体中文和英文界面 · 无需账号，无广告，不收集任何数据。</p>
+  </div>
+  <footer>
+    <div class="l-en"><a href="./">Tutti</a> · <a href="support/">Support</a> · <a href="privacy/">Privacy</a> · <a href="https://whereabouts.top">whereabouts.top</a></div>
+    <div class="l-zh"><a href="./">Tutti 打谱</a> · <a href="support/">技术支持</a> · <a href="privacy/">隐私政策</a> · <a href="https://whereabouts.top">whereabouts.top</a></div>
+    <div style="margin-top:8px">© 2026 Chengzhu Zhao</div>
+  </footer>
+</div>
+</body>
+</html>
